@@ -1,17 +1,32 @@
 {
-  "thin-file-credit-decision-engine.png": {
-    "repository": "https://github.com/J0BS013/thin-file-credit-decision-engine",
-    "commit": "96806600894d401e71f0d572d6863ac7bcf29535",
-    "source": "docs/assets/credit-decision-simulator.png"
-  },
-  "subscription-analytics-dbt.png": {
-    "repository": "https://github.com/J0BS013/subscription-analytics-dbt",
-    "commit": "40f74e571639a4aee525c5bbaf928ba9d7271d3a",
-    "source": "docs/assets/subscription-analytics-dashboard.png"
-  },
-  "marketplace-event-lakehouse": {
-    "repository": "https://github.com/J0BS013/marketplace-event-lakehouse",
-    "commit": "7b5a7e037408911d5ee15fdc49b015041a21f50c",
-    "source": "code-native diagram in src/components/ProjectVisual.astro"
-  }
+    "thin-file-credit-decision-engine.png":  {
+                                                 "repository":  "https://github.com/J0BS013/thin-file-credit-decision-engine",
+                                                 "commit":  "96806600894d401e71f0d572d6863ac7bcf29535",
+                                                 "source":  "docs/assets/credit-decision-simulator.png"
+                                             },
+    "subscription-analytics-dbt.png":  {
+                                           "repository":  "https://github.com/J0BS013/subscription-analytics-dbt",
+                                           "commit":  "40f74e571639a4aee525c5bbaf928ba9d7271d3a",
+                                           "source":  "docs/assets/subscription-analytics-dashboard.png"
+                                       },
+    "marketplace-event-lakehouse":  {
+                                        "repository":  "https://github.com/J0BS013/marketplace-event-lakehouse",
+                                        "commit":  "7b5a7e037408911d5ee15fdc49b015041a21f50c",
+                                        "source":  "code-native diagram in src/components/ProjectVisual.astro"
+                                    },
+    "retailer-segmentation-rfm-clustering.png":  {
+                                                     "repository":  "https://github.com/J0BS013/retailer-segmentation-rfm-clustering",
+                                                     "commit":  "4374d4e31555ebf3734a301da98da333de9ced81",
+                                                     "source":  "outputs/segment_share.png"
+                                                 },
+    "hevy-workout-etl-pipeline.png":  {
+                                          "repository":  "https://github.com/J0BS013/hevy-workout-etl-pipeline",
+                                          "commit":  "5618eb64288cc15af1accc0203d7cdd1955783ce",
+                                          "source":  "docs/assets/hevy-dashboard.png"
+                                      },
+    "starbucks-promo-effectiveness-analysis.png":  {
+                                                       "repository":  "https://github.com/J0BS013/starbucks-promo-effectiveness-analysis",
+                                                       "commit":  "652ff04cc5c8787233b9addbe5ee433e127f03ae",
+                                                       "source":  "reports/figures/05_roi_by_type.png"
+                                                   }
 }

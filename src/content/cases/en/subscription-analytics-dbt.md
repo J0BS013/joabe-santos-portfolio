@@ -13,6 +13,7 @@ question: Can Finance and Product trust MRR, NRR, churn and retention when sourc
 repoUrl: https://github.com/J0BS013/subscription-analytics-dbt
 demoUrl: https://subscription-analytics-dbt.streamlit.app/
 image: /images/projects/subscription-analytics-dbt.png
+socialImage: /social/subscription-analytics-dbt.png
 imageAlt: Subscription analytics dashboard with ending MRR, NRR, paid revenue and a monthly MRR movement bridge.
 sourceCommit: 40f74e571639a4aee525c5bbaf928ba9d7271d3a
 evidence:

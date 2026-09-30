@@ -13,6 +13,7 @@ question: Who should be approved, at what first-loan size, and when is extra ver
 repoUrl: https://github.com/J0BS013/thin-file-credit-decision-engine
 demoUrl: https://thin-file-credit-decision.streamlit.app/
 image: /images/projects/thin-file-credit-decision-engine.png
+socialImage: /social/thin-file-credit-decision-engine.png
 imageAlt: Credit decision simulator showing a policy recommendation, risk estimates and decision-time inputs.
 sourceCommit: 96806600894d401e71f0d572d6863ac7bcf29535
 evidence:

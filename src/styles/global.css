@@ -94,11 +94,13 @@ p { margin: 0 0 1.15rem; }
 .scope-item p { color: var(--muted); }
 .project-number { color: var(--accent-dark); font-family: var(--mono); font-size: .75rem; font-weight: 700; letter-spacing: .08em; }
 .other-grid { display: grid; gap: 1rem; grid-template-columns: repeat(3, 1fr); }
-.other-card { background: var(--surface); border: 1px solid var(--rule); border-radius: 1.35rem; color: var(--ink); display: flex; flex-direction: column; min-height: 23rem; padding: 1.5rem; position: relative; text-decoration: none; transition: border-color 160ms ease, transform 160ms ease; }
+.other-card { background: var(--surface); border: 1px solid var(--rule); border-radius: 1.35rem; color: var(--ink); display: flex; flex-direction: column; min-height: 30rem; padding: 1.25rem; position: relative; text-decoration: none; transition: border-color 160ms ease, transform 160ms ease; }
 .other-card:nth-child(2) { background: #f0e9fa; }
 .other-card:nth-child(3) { background: #ffe8dd; }
 .other-card:hover { border-color: var(--ink); color: var(--ink); transform: translateY(-5px); }
-.other-card h3 { font-size: 1.65rem; margin-block: 3rem 1.1rem; }
+.other-visual { background: color-mix(in srgb, white 55%, transparent); border: 1px solid color-mix(in srgb, var(--ink) 12%, transparent); border-radius: .9rem; margin: 2.5rem 0 1.35rem; overflow: hidden; }
+.other-visual img { aspect-ratio: 16 / 9; height: auto; object-fit: cover; width: 100%; }
+.other-card h3 { font-size: 1.65rem; margin-block: 0 1rem; }
 .other-card p { color: var(--muted); }
 .other-evidence { border-top: 1px solid color-mix(in srgb, var(--ink) 15%, transparent); font-family: var(--mono); font-size: .72rem; margin-top: auto; padding-top: 1rem; }
 .card-arrow { font-size: 1.25rem; position: absolute; right: 1.5rem; top: 1.25rem; }
@@ -187,7 +189,7 @@ p { margin: 0 0 1.15rem; }
   .project-copy { padding: .3rem; }
   .project-copy h3 { font-size: 2.15rem; }
   .other-grid { grid-template-columns: 1fr; }
-  .other-card, .other-card:last-child { grid-column: auto; min-height: 19rem; }
+  .other-card, .other-card:last-child { grid-column: auto; min-height: 27rem; }
   .case-meta { grid-template-columns: 1fr; }
   .case-meta div + div { border-left: 0; border-top: 1px solid var(--rule); }
   .timeline li { grid-template-columns: 1fr; }

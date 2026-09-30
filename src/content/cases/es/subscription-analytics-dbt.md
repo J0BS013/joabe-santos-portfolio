@@ -13,6 +13,7 @@ question: ¿Finanzas y Producto pueden confiar en MRR, NRR, churn y retención c
 repoUrl: https://github.com/J0BS013/subscription-analytics-dbt
 demoUrl: https://subscription-analytics-dbt.streamlit.app/
 image: /images/projects/subscription-analytics-dbt.png
+socialImage: /social/subscription-analytics-dbt.png
 imageAlt: Dashboard de suscripciones con MRR final, NRR, ingresos pagados y puente mensual de movimientos.
 sourceCommit: 40f74e571639a4aee525c5bbaf928ba9d7271d3a
 evidence:

@@ -11,7 +11,7 @@ const caseStudies = defineCollection({
   schema: z.object({
     locale: z.enum(['en', 'pt-br', 'es']),
     slug: z.string(),
-    order: z.number().int().min(1).max(3),
+    order: z.number().int().min(1).max(6),
     title: z.string(),
     eyebrow: z.string(),
     description: z.string(),
@@ -23,6 +23,7 @@ const caseStudies = defineCollection({
     repoUrl: z.url(),
     demoUrl: z.url().optional(),
     image: z.string().optional(),
+    socialImage: z.string().optional(),
     imageAlt: z.string().optional(),
     sourceCommit: z.string(),
     evidence: z.array(z.object({ label: z.string(), value: z.string() })).min(2).max(4),

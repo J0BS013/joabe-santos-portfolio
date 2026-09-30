@@ -11,6 +11,7 @@ dataKind: generated
 dataLabel: Eventos determinísticos generados
 question: ¿Cómo convertir eventos duplicados, tardíos y fuera de orden en métricas confiables de embudo, GMV e ingresos?
 repoUrl: https://github.com/J0BS013/marketplace-event-lakehouse
+socialImage: /social/marketplace-event-lakehouse.png
 sourceCommit: 7b5a7e037408911d5ee15fdc49b015041a21f50c
 evidence:
   - label: Confiabilidad

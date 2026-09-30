@@ -19,7 +19,7 @@ const labels = locale === 'en'
     ? { role: 'Papel', year: 'Ano', data: 'Dados', evidence: 'Evidências', contents: 'Nesta página', limitation: 'Limitação' }
     : { role: 'Rol', year: 'Año', data: 'Datos', evidence: 'Evidencia', contents: 'En esta página', limitation: 'Limitación' };
 ---
-<BaseLayout locale={locale} routePath={`/work/${slug}`} title={`${data.title} — Joabe Santos`} description={data.description} image={data.image}>
+<BaseLayout locale={locale} routePath={`/work/${slug}`} title={`${data.title} — Joabe Santos`} description={data.description} image={data.socialImage ?? data.image}>
   <header class="case-header container">
     <p class="eyebrow">0{data.order} · {data.eyebrow}</p>
     <h1>{data.title}</h1>

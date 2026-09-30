@@ -6,6 +6,7 @@ interface Props { locale: Locale; routePath: string; }
 const { locale, routePath } = Astro.props;
 const t = copy[locale];
 const navItems = [
+  { label: t.nav.home, route: '/' },
   { label: t.nav.work, route: '/work' },
   { label: t.nav.about, route: '/about' },
   { label: t.nav.resume, route: '/resume' },

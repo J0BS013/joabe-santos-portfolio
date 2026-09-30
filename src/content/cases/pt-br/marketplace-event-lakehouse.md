@@ -11,6 +11,7 @@ dataKind: generated
 dataLabel: Eventos determinísticos gerados
 question: Como eventos duplicados, atrasados e fora de ordem viram métricas confiáveis de funil, GMV e receita?
 repoUrl: https://github.com/J0BS013/marketplace-event-lakehouse
+socialImage: /social/marketplace-event-lakehouse.png
 sourceCommit: 7b5a7e037408911d5ee15fdc49b015041a21f50c
 evidence:
   - label: Confiabilidade

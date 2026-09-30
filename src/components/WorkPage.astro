@@ -22,5 +22,5 @@ const sourceCommits = ['9680660', '40f74e5', '7b5a7e0'];
       </article>
     ))}
   </section>
-  <section class="section"><div class="container"><div class="section-heading"><div><p class="eyebrow">04—06</p><h2>{t.sections.other}</h2></div></div><div class="other-grid">{otherProjects[locale].map((project, index) => <a class="other-card" href={project.href}><span class="project-number">0{index + 4}</span><h3>{project.title}</h3><p>{project.body}</p><span class="other-evidence">{project.evidence}</span><span class="card-arrow" aria-hidden="true">↗</span></a>)}</div></div></section>
+  <section class="section"><div class="container"><div class="section-heading"><div><p class="eyebrow">04—06</p><h2>{t.sections.other}</h2></div></div><div class="other-grid">{otherProjects[locale].map((project, index) => <a class="other-card" href={localizedPath(locale, `/work/${project.slug}`)}><span class="project-number">0{index + 4}</span><figure class="other-visual"><ProjectVisual slug={project.slug} alt={project.title} variant="product" /></figure><h3>{project.title}</h3><p>{project.body}</p><span class="other-evidence">{project.evidence}</span><span class="card-arrow" aria-hidden="true">→</span></a>)}</div></div></section>
 </BaseLayout>

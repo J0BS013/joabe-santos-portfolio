@@ -4,6 +4,9 @@ export const caseSlugs = [
   'thin-file-credit-decision-engine',
   'subscription-analytics-dbt',
   'marketplace-event-lakehouse',
+  'starbucks-promo-effectiveness-analysis',
+  'retailer-segmentation-rfm-clustering',
+  'hevy-workout-etl-pipeline',
 ] as const;
 
 export type CaseSlug = (typeof caseSlugs)[number];
@@ -20,10 +23,20 @@ export const projectLinks: Record<CaseSlug, { repo: string; demo?: string }> = {
   'marketplace-event-lakehouse': {
     repo: 'https://github.com/J0BS013/marketplace-event-lakehouse',
   },
+  'starbucks-promo-effectiveness-analysis': {
+    repo: 'https://github.com/J0BS013/starbucks-promo-effectiveness-analysis',
+  },
+  'retailer-segmentation-rfm-clustering': {
+    repo: 'https://github.com/J0BS013/retailer-segmentation-rfm-clustering',
+  },
+  'hevy-workout-etl-pipeline': {
+    repo: 'https://github.com/J0BS013/hevy-workout-etl-pipeline',
+    demo: 'https://hevy-workout-dashboard-j0bs013.streamlit.app/',
+  },
 };
 
 type Copy = {
-  nav: { work: string; about: string; resume: string };
+  nav: { home: string; work: string; about: string; resume: string };
   skip: string;
   hero: {
     role: string;
@@ -62,7 +75,7 @@ type Copy = {
 
 export const copy: Record<Locale, Copy> = {
   en: {
-    nav: { work: 'Work', about: 'About', resume: 'Résumé' },
+    nav: { home: 'Home', work: 'Work', about: 'About', resume: 'Résumé' },
     skip: 'Skip to content',
     hero: {
       role: 'Decision Scientist and Analytics Engineer',
@@ -75,7 +88,7 @@ export const copy: Record<Locale, Copy> = {
       selected: 'Selected work',
       selectedIntro: 'Three projects, each built around a decision and the evidence required to make it responsibly.',
       scope: 'How I work across the decision path',
-      other: 'Other work',
+      other: 'Applied case studies',
       about: 'About',
       viewCase: 'Read case study',
       repository: 'Repository',
@@ -112,7 +125,7 @@ export const copy: Record<Locale, Copy> = {
     updated: 'Updated September 2026',
   },
   'pt-br': {
-    nav: { work: 'Projetos', about: 'Sobre', resume: 'Currículo' },
+    nav: { home: 'Início', work: 'Projetos', about: 'Sobre', resume: 'Currículo' },
     skip: 'Pular para o conteúdo',
     hero: {
       role: 'Decision Scientist e Analytics Engineer',
@@ -125,7 +138,7 @@ export const copy: Record<Locale, Copy> = {
       selected: 'Projetos selecionados',
       selectedIntro: 'Três projetos organizados pela decisão e pela evidência necessária para tomá-la com responsabilidade.',
       scope: 'Como atuo ao longo da decisão',
-      other: 'Outros projetos',
+      other: 'Cases aplicados',
       about: 'Sobre',
       viewCase: 'Ler estudo de caso',
       repository: 'Repositório',
@@ -162,7 +175,7 @@ export const copy: Record<Locale, Copy> = {
     updated: 'Atualizado em setembro de 2026',
   },
   es: {
-    nav: { work: 'Proyectos', about: 'Sobre mí', resume: 'Currículum' },
+    nav: { home: 'Inicio', work: 'Proyectos', about: 'Sobre mí', resume: 'Currículum' },
     skip: 'Saltar al contenido',
     hero: {
       role: 'Decision Scientist y Analytics Engineer',
@@ -175,7 +188,7 @@ export const copy: Record<Locale, Copy> = {
       selected: 'Proyectos seleccionados',
       selectedIntro: 'Tres proyectos organizados alrededor de la decisión y de la evidencia necesaria para tomarla responsablemente.',
       scope: 'Cómo trabajo a lo largo de la decisión',
-      other: 'Otros proyectos',
+      other: 'Casos aplicados',
       about: 'Sobre mí',
       viewCase: 'Leer caso',
       repository: 'Repositorio',
@@ -238,20 +251,20 @@ export const selectedProjects: Record<Locale, Array<{
   ],
 };
 
-export const otherProjects: Record<Locale, Array<{ title: string; body: string; href: string; evidence: string }>> = {
+export const otherProjects: Record<Locale, Array<{ slug: CaseSlug; title: string; body: string; evidence: string }>> = {
   en: [
-    { title: 'Starbucks Promo Effectiveness', body: 'Attributed repeated offers with explicit exposure windows and separated observational evidence from causal claims.', evidence: 'Temporal attribution · ROI framing', href: 'https://github.com/J0BS013/starbucks-promo-effectiveness-analysis' },
-    { title: 'Retailer RFM Decisioning', body: 'Turned behavioral segments into cost-aware campaign actions and an explicit do-not-target policy.', evidence: '5,878 customers · 68.2% revenue in Champions', href: 'https://github.com/J0BS013/retailer-segmentation-rfm-clustering' },
-    { title: 'Hevy Workout ETL', body: 'Protected historical workout snapshots from partial API responses and exposed trusted Gold outputs in a live dashboard.', evidence: '56 tests · Live data product', href: 'https://hevy-workout-dashboard-j0bs013.streamlit.app/' },
+    { title: 'Starbucks Promo Effectiveness', body: 'Attributed repeated offers with explicit exposure windows and separated observational evidence from causal claims.', evidence: 'Temporal attribution · ROI framing', slug: 'starbucks-promo-effectiveness-analysis' },
+    { title: 'Retailer RFM Decisioning', body: 'Turned behavioral segments into cost-aware campaign actions and an explicit do-not-target policy.', evidence: '5,878 customers · 68.2% revenue in Champions', slug: 'retailer-segmentation-rfm-clustering' },
+    { title: 'Hevy Workout ETL', body: 'Protected historical workout snapshots from partial API responses and exposed trusted Gold outputs in a live dashboard.', evidence: '56 tests · Live data product', slug: 'hevy-workout-etl-pipeline' },
   ],
   'pt-br': [
-    { title: 'Starbucks Promo Effectiveness', body: 'Atribuí ofertas repetidas com janelas de exposição explícitas e separei evidência observacional de alegações causais.', evidence: 'Atribuição temporal · ROI', href: 'https://github.com/J0BS013/starbucks-promo-effectiveness-analysis' },
-    { title: 'Retailer RFM Decisioning', body: 'Transformei segmentos comportamentais em ações de campanha sensíveis a custo e numa política explícita de não segmentação.', evidence: '5.878 clientes · 68,2% da receita em Champions', href: 'https://github.com/J0BS013/retailer-segmentation-rfm-clustering' },
-    { title: 'Hevy Workout ETL', body: 'Protegi snapshots históricos contra respostas parciais da API e expus outputs Gold confiáveis num dashboard ao vivo.', evidence: '56 testes · Produto de dados ao vivo', href: 'https://hevy-workout-dashboard-j0bs013.streamlit.app/' },
+    { title: 'Starbucks Promo Effectiveness', body: 'Atribuí ofertas repetidas com janelas de exposição explícitas e separei evidência observacional de alegações causais.', evidence: 'Atribuição temporal · ROI', slug: 'starbucks-promo-effectiveness-analysis' },
+    { title: 'Retailer RFM Decisioning', body: 'Transformei segmentos comportamentais em ações de campanha sensíveis a custo e numa política explícita de não segmentação.', evidence: '5.878 clientes · 68,2% da receita em Champions', slug: 'retailer-segmentation-rfm-clustering' },
+    { title: 'Hevy Workout ETL', body: 'Protegi snapshots históricos contra respostas parciais da API e expus outputs Gold confiáveis num dashboard ao vivo.', evidence: '56 testes · Produto de dados ao vivo', slug: 'hevy-workout-etl-pipeline' },
   ],
   es: [
-    { title: 'Starbucks Promo Effectiveness', body: 'Atribuí ofertas repetidas con ventanas de exposición explícitas y separé evidencia observacional de afirmaciones causales.', evidence: 'Atribución temporal · ROI', href: 'https://github.com/J0BS013/starbucks-promo-effectiveness-analysis' },
-    { title: 'Retailer RFM Decisioning', body: 'Convertí segmentos de comportamiento en acciones de campaña sensibles al costo y una política explícita de no targeting.', evidence: '5.878 clientes · 68,2% de ingresos en Champions', href: 'https://github.com/J0BS013/retailer-segmentation-rfm-clustering' },
-    { title: 'Hevy Workout ETL', body: 'Protegí snapshots históricos de respuestas parciales de la API y expuse outputs Gold confiables en un dashboard en vivo.', evidence: '56 pruebas · Producto de datos en vivo', href: 'https://hevy-workout-dashboard-j0bs013.streamlit.app/' },
+    { title: 'Starbucks Promo Effectiveness', body: 'Atribuí ofertas repetidas con ventanas de exposición explícitas y separé evidencia observacional de afirmaciones causales.', evidence: 'Atribución temporal · ROI', slug: 'starbucks-promo-effectiveness-analysis' },
+    { title: 'Retailer RFM Decisioning', body: 'Convertí segmentos de comportamiento en acciones de campaña sensibles al costo y una política explícita de no targeting.', evidence: '5.878 clientes · 68,2% de ingresos en Champions', slug: 'retailer-segmentation-rfm-clustering' },
+    { title: 'Hevy Workout ETL', body: 'Protegí snapshots históricos de respuestas parciales de la API y expuse outputs Gold confiables en un dashboard en vivo.', evidence: '56 pruebas · Producto de datos en vivo', slug: 'hevy-workout-etl-pipeline' },
   ],
 };

@@ -11,6 +11,7 @@ dataKind: generated
 dataLabel: Deterministic generated events
 question: How do duplicated, late and out-of-order events become trustworthy funnel, GMV and revenue metrics?
 repoUrl: https://github.com/J0BS013/marketplace-event-lakehouse
+socialImage: /social/marketplace-event-lakehouse.png
 sourceCommit: 7b5a7e037408911d5ee15fdc49b015041a21f50c
 evidence:
   - label: Reliability

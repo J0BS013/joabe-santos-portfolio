@@ -7,6 +7,9 @@ const { slug, alt, eager = false, variant = 'data' } = Astro.props;
 const images: Partial<Record<CaseSlug, { src: string; width: number; height: number }>> = {
   'thin-file-credit-decision-engine': { src: '/images/projects/thin-file-credit-decision-engine.png', width: 1440, height: 1100 },
   'subscription-analytics-dbt': { src: '/images/projects/subscription-analytics-dbt.png', width: 1440, height: 1100 },
+  'starbucks-promo-effectiveness-analysis': { src: '/images/projects/starbucks-promo-effectiveness-analysis.png', width: 1176, height: 575 },
+  'retailer-segmentation-rfm-clustering': { src: '/images/projects/retailer-segmentation-rfm-clustering.png', width: 1800, height: 750 },
+  'hevy-workout-etl-pipeline': { src: '/images/projects/hevy-workout-etl-pipeline.png', width: 1440, height: 1100 },
 };
 const image = images[slug];
 const titleId = `title-${slug}-${variant}`;

@@ -13,6 +13,7 @@ question: Quem aprovar, qual primeiro limite oferecer e quando uma verificação
 repoUrl: https://github.com/J0BS013/thin-file-credit-decision-engine
 demoUrl: https://thin-file-credit-decision.streamlit.app/
 image: /images/projects/thin-file-credit-decision-engine.png
+socialImage: /social/thin-file-credit-decision-engine.png
 imageAlt: Simulador de decisão de crédito com recomendação, estimativas de risco e dados disponíveis no momento da decisão.
 sourceCommit: 96806600894d401e71f0d572d6863ac7bcf29535
 evidence:
