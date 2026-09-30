@@ -1,0 +1,46 @@
+---
+import type { Locale } from '../lib/i18n';
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const label = locale === 'en'
+  ? 'A visual map connecting trusted data, decision models and business action'
+  : locale === 'pt-br'
+    ? 'Um mapa visual conectando dados confiáveis, modelos de decisão e ação de negócio'
+    : 'Un mapa visual que conecta datos confiables, modelos de decisión y acción de negocio';
+---
+
+<figure class="data-portrait">
+  <svg viewBox="0 0 720 620" role="img" aria-labelledby="portrait-title portrait-desc">
+    <title id="portrait-title">{label}</title>
+    <desc id="portrait-desc">Three connected data systems represented by a decision scatter plot, a retention matrix and an event pipeline.</desc>
+    <rect width="720" height="620" rx="34" fill="#132d24" />
+    <g opacity=".16" stroke="#dcefe3"><path d="M0 100h720M0 200h720M0 300h720M0 400h720M0 500h720"/><path d="M120 0v620M240 0v620M360 0v620M480 0v620M600 0v620"/></g>
+    <g fill="none" stroke="#9fd8bc" stroke-width="2" opacity=".75"><path d="M92 448C190 410 224 220 352 253S503 420 630 132"/><path d="M92 482C208 426 275 463 352 374S508 233 630 278"/></g>
+    <g fill="#f36b45"><circle cx="118" cy="435" r="9"/><circle cx="191" cy="385" r="6"/><circle cx="274" cy="291" r="10"/><circle cx="353" cy="253" r="7"/><circle cx="451" cy="342" r="9"/><circle cx="536" cy="316" r="6"/><circle cx="630" cy="132" r="11"/></g>
+    <g fill="#f2df9b"><circle cx="92" cy="482" r="7"/><circle cx="172" cy="445" r="5"/><circle cx="263" cy="452" r="8"/><circle cx="352" cy="374" r="10"/><circle cx="437" cy="298" r="6"/><circle cx="535" cy="238" r="8"/><circle cx="630" cy="278" r="6"/></g>
+    <g transform="translate(72 70)">
+      <rect width="192" height="112" rx="18" fill="#f4eee2"/>
+      <text x="22" y="34" fill="#365144" font-family="Arial,sans-serif" font-size="12" font-weight="700" letter-spacing="1.5">TRUSTED DATA</text>
+      <text x="22" y="73" fill="#132d24" font-family="Arial,sans-serif" font-size="26" font-weight="700">Reconcile</text>
+      <path d="M22 90h145" stroke="#d4cdbf"/><circle cx="142" cy="90" r="5" fill="#f36b45"/>
+    </g>
+    <g transform="translate(382 184)">
+      <rect width="264" height="132" rx="18" fill="#dcefe3"/>
+      <text x="22" y="36" fill="#365144" font-family="Arial,sans-serif" font-size="12" font-weight="700" letter-spacing="1.5">DECISION MODEL</text>
+      <text x="22" y="78" fill="#132d24" font-family="Arial,sans-serif" font-size="29" font-weight="700">Optimize policy</text>
+      <text x="22" y="107" fill="#365144" font-family="Arial,sans-serif" font-size="14">risk × value × friction</text>
+    </g>
+    <g transform="translate(126 494)">
+      <rect width="430" height="72" rx="18" fill="#f36b45"/>
+      <text x="24" y="29" fill="#ffe9df" font-family="Arial,sans-serif" font-size="11" font-weight="700" letter-spacing="1.5">BUSINESS ACTION</text>
+      <text x="24" y="54" fill="#fff" font-family="Arial,sans-serif" font-size="20" font-weight="700">Make the next decision inspectable</text>
+    </g>
+  </svg>
+  <figcaption>{label}</figcaption>
+</figure>
+
+<style>
+  .data-portrait { margin: 0; }
+  svg { filter: drop-shadow(0 24px 50px rgba(19,45,36,.18)); width: 100%; }
+  figcaption { color: var(--muted); font-family: var(--mono); font-size: .7rem; margin-top: .75rem; }
+</style>

@@ -7,17 +7,20 @@ interface Props { locale: Locale; }
 const { locale } = Astro.props;
 const t = copy[locale];
 const title = `${t.nav.work} — Joabe Santos`;
+const sourceCommits = ['9680660', '40f74e5', '7b5a7e0'];
 ---
 <BaseLayout locale={locale} routePath="/work" title={title} description={t.workIntro}>
-  <header class="page-header container"><p class="eyebrow">Portfolio</p><h1>{t.nav.work}</h1><p class="lede">{t.workIntro}</p></header>
-  <section class="section"><div class="container project-list">
-    {selectedProjects[locale].map((project) => (
-      <article class="project-card">
-        <div class="project-number">{project.number}</div>
-        <div><p class="eyebrow">{project.role}</p><h3>{project.title}</h3><p class="project-question">{project.question}</p><ul class="evidence-list">{project.evidence.map((item) => <li>{item}</li>)}</ul><div class="project-links"><a href={localizedPath(locale, `/work/${project.slug}`)}>{t.sections.viewCase} →</a><a href={projectLinks[project.slug].repo}>{t.sections.repository} ↗</a>{projectLinks[project.slug].demo && <a href={projectLinks[project.slug].demo}>{t.sections.liveDemo} ↗</a>}</div></div>
-        <figure class="project-figure"><ProjectVisual slug={project.slug} alt={project.title} /><figcaption>{project.number === '01' ? 'Source commit 9680660' : project.number === '02' ? 'Source commit 40f74e5' : 'Source commit 7b5a7e0'}</figcaption></figure>
+  <header class="page-header container work-header"><p class="eyebrow">Portfolio · 01—06</p><h1>{t.nav.work}</h1><p class="lede">{t.workIntro}</p></header>
+  <section class="selected-work container" aria-label={t.sections.selected}>
+    {selectedProjects[locale].map((project, index) => (
+      <article class="project-showcase" data-project={project.slug}>
+        <header class="project-showcase-header"><span class="project-number">{project.number}</span><span>{project.role}</span><span class="source-label">Source · {sourceCommits[index]}</span></header>
+        <div class="project-showcase-grid">
+          <figure class="project-visual"><ProjectVisual slug={project.slug} alt={project.title} eager={index === 0} /></figure>
+          <div class="project-copy"><h3><a href={localizedPath(locale, `/work/${project.slug}`)}>{project.title}</a></h3><p class="project-question">{project.question}</p><ul class="evidence-list">{project.evidence.map((item) => <li>{item}</li>)}</ul><div class="project-links"><a class="button compact" href={localizedPath(locale, `/work/${project.slug}`)}>{t.sections.viewCase} →</a>{projectLinks[project.slug].demo && <a href={projectLinks[project.slug].demo}>{t.sections.liveDemo} ↗</a>}<a href={projectLinks[project.slug].repo}>{t.sections.repository} ↗</a></div></div>
+        </div>
       </article>
     ))}
-  </div></section>
-  <section class="section"><div class="container"><h2>{t.sections.other}</h2><div class="other-list">{otherProjects[locale].map((project) => <a class="other-item" href={project.href}><h3>{project.title}</h3><p>{project.body}</p><span class="evidence">{project.evidence}</span><span aria-hidden="true">↗</span></a>)}</div></div></section>
+  </section>
+  <section class="section"><div class="container"><div class="section-heading"><div><p class="eyebrow">04—06</p><h2>{t.sections.other}</h2></div></div><div class="other-grid">{otherProjects[locale].map((project, index) => <a class="other-card" href={project.href}><span class="project-number">0{index + 4}</span><h3>{project.title}</h3><p>{project.body}</p><span class="other-evidence">{project.evidence}</span><span class="card-arrow" aria-hidden="true">↗</span></a>)}</div></div></section>
 </BaseLayout>

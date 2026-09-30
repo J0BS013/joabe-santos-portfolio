@@ -29,7 +29,7 @@ const labels = locale === 'en'
     </dl>
   </header>
   <section class="container">
-    <figure class="project-figure case-visual"><ProjectVisual slug={slug} alt={data.imageAlt ?? data.title} eager /><figcaption>{data.title} · source commit {data.sourceCommit.slice(0, 7)}</figcaption></figure>
+    <figure class="project-figure case-visual"><ProjectVisual slug={slug} alt={data.imageAlt ?? data.title} eager variant="product" /><figcaption>{data.title} · source commit {data.sourceCommit.slice(0, 7)}</figcaption></figure>
   </section>
   <div class="case-body container">
     <aside class="case-aside">

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import DataPortrait from './DataPortrait.astro';
 import ProjectVisual from './ProjectVisual.astro';
 import { copy, otherProjects, projectLinks, selectedProjects } from '../data/site';
 import { localizedPath, withBase, type Locale } from '../lib/i18n';
@@ -10,88 +11,100 @@ const t = copy[locale];
 const projects = selectedProjects[locale];
 const localeName = locale === 'en' ? 'English' : locale === 'pt-br' ? 'Português' : 'Español';
 const title = locale === 'en' ? 'Joabe Santos — Decision Scientist & Analytics Engineer' : locale === 'pt-br' ? 'Joabe Santos — Decision Scientist e Analytics Engineer' : 'Joabe Santos — Decision Scientist y Analytics Engineer';
+const heroLabels = locale === 'en'
+  ? ['Decision systems', 'Trusted metrics', 'Applied statistics']
+  : locale === 'pt-br'
+    ? ['Sistemas de decisão', 'Métricas confiáveis', 'Estatística aplicada']
+    : ['Sistemas de decisión', 'Métricas confiables', 'Estadística aplicada'];
+const sourceCommits = ['9680660', '40f74e5', '7b5a7e0'];
 ---
 
 <BaseLayout locale={locale} routePath="/" title={title} description={t.hero.statement}>
   <section class="hero">
     <div class="hero-grid container">
-      <div>
-        <p class="eyebrow">{localeName} · São Paulo</p>
-        <h1><span>{t.hero.role}</span>Joabe<br />Santos</h1>
-      </div>
       <div class="hero-copy">
-        <p class="lede">{t.hero.statement}</p>
-        <p>{t.hero.detail}</p>
+        <p class="eyebrow">{localeName} · São Paulo</p>
+        <h1>{t.hero.statement}</h1>
+        <p class="hero-role">{t.hero.role}</p>
+        <p class="hero-detail">{t.hero.detail}</p>
         <div class="button-row">
-          <a class="button" href={localizedPath(locale, '/work')}>{t.hero.workCta} <span aria-hidden="true">→</span></a>
-          <a class="button secondary" href={withBase('/resume/joabe-santos-resume.pdf')} download>{t.hero.resumeCta}</a>
+          <a class="button" href={localizedPath(locale, '/work')}>{t.hero.workCta} <span aria-hidden="true">↘</span></a>
+          <a class="text-link" href={withBase('/resume/joabe-santos-resume.pdf')} download>{t.hero.resumeCta} ↓</a>
         </div>
-        <div class="hero-meta">
-          <span>São Paulo, Brazil</span>
-          <a href="https://github.com/J0BS013">GitHub</a>
-          <a href="https://www.linkedin.com/in/joabe-santos">LinkedIn</a>
-          <a href="mailto:jbencao37@gmail.com">Email</a>
-        </div>
+        <ul class="hero-capabilities" aria-label="Core capabilities">
+          {heroLabels.map((label) => <li>{label}</li>)}
+        </ul>
       </div>
+      <DataPortrait locale={locale} />
     </div>
   </section>
 
-  <section class="section">
+  <section class="work-intro section">
+    <div class="container section-heading">
+      <div><p class="eyebrow">01—03 · Flagship cases</p><h2>{t.sections.selected}</h2></div>
+      <p>{t.sections.selectedIntro}</p>
+    </div>
+  </section>
+
+  <section class="selected-work container" aria-label={t.sections.selected}>
+    {projects.map((project, index) => (
+      <article class="project-showcase" data-project={project.slug}>
+        <header class="project-showcase-header">
+          <span class="project-number">{project.number}</span>
+          <span>{project.role}</span>
+          <span class="source-label">Source · {sourceCommits[index]}</span>
+        </header>
+        <div class="project-showcase-grid">
+          <figure class="project-visual">
+            <ProjectVisual slug={project.slug} alt={`${project.title} — ${project.evidence.join(', ')}`} eager={index === 0} />
+          </figure>
+          <div class="project-copy">
+            <h3><a href={localizedPath(locale, `/work/${project.slug}`)}>{project.title}</a></h3>
+            <p class="project-question">{project.question}</p>
+            <ul class="evidence-list">{project.evidence.map((item) => <li>{item}</li>)}</ul>
+            <div class="project-links">
+              <a class="button compact" href={localizedPath(locale, `/work/${project.slug}`)}>{t.sections.viewCase} <span aria-hidden="true">→</span></a>
+              {projectLinks[project.slug].demo && <a href={projectLinks[project.slug].demo}>{t.sections.liveDemo} ↗</a>}
+              <a href={projectLinks[project.slug].repo}>{t.sections.repository} ↗</a>
+            </div>
+          </div>
+        </div>
+      </article>
+    ))}
+  </section>
+
+  <section class="section method-section">
     <div class="container">
       <div class="section-heading">
-        <div><p class="eyebrow">01—03</p><h2>{t.sections.selected}</h2></div>
-        <p>{t.sections.selectedIntro}</p>
+        <div><p class="eyebrow">Method</p><h2>{t.sections.scope}</h2></div>
+        <p>{t.aboutShort}</p>
       </div>
-      <div class="project-list">
-        {projects.map((project) => (
-          <article class="project-card">
-            <div class="project-number">{project.number}</div>
-            <div>
-              <p class="eyebrow">{project.role}</p>
-              <h3>{project.title}</h3>
-              <p class="project-question">{project.question}</p>
-              <ul class="evidence-list">{project.evidence.map((item) => <li>{item}</li>)}</ul>
-              <div class="project-links">
-                <a href={localizedPath(locale, `/work/${project.slug}`)}>{t.sections.viewCase} →</a>
-                <a href={projectLinks[project.slug].repo}>{t.sections.repository} ↗</a>
-                {projectLinks[project.slug].demo && <a href={projectLinks[project.slug].demo}>{t.sections.liveDemo} ↗</a>}
-              </div>
-            </div>
-            <figure class="project-figure">
-              <ProjectVisual slug={project.slug} alt={`${project.title} — ${project.evidence.join(', ')}`} eager={project.number === '01'} />
-              <figcaption>{project.number === '01' ? 'Source commit 9680660' : project.number === '02' ? 'Source commit 40f74e5' : 'Architecture matched to source commit 7b5a7e0'}</figcaption>
-            </figure>
-          </article>
-        ))}
-      </div>
+      <div class="scope-grid">{t.scope.map((item, index) => <div class="scope-item"><span class="project-number">0{index + 1}</span><h3>{item.title}</h3><p>{item.body}</p></div>)}</div>
     </div>
   </section>
 
   <section class="section">
     <div class="container">
-      <p class="eyebrow">Method</p>
-      <h2>{t.sections.scope}</h2>
-      <div class="scope-grid">{t.scope.map((item) => <div class="scope-item"><h3>{item.title}</h3><p>{item.body}</p></div>)}</div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container">
-      <div class="section-heading"><div><p class="eyebrow">04—06</p><h2>{t.sections.other}</h2></div><a href={localizedPath(locale, '/work')}>{t.sections.allWork} →</a></div>
-      <div class="other-list">
-        {otherProjects[locale].map((project) => (
-          <a class="other-item" href={project.href}>
-            <h3>{project.title}</h3><p>{project.body}</p><span class="evidence">{project.evidence}</span><span aria-hidden="true">↗</span>
+      <div class="section-heading"><div><p class="eyebrow">04—06 · More evidence</p><h2>{t.sections.other}</h2></div><a class="text-link" href={localizedPath(locale, '/work')}>{t.sections.allWork} →</a></div>
+      <div class="other-grid">
+        {otherProjects[locale].map((project, index) => (
+          <a class="other-card" href={project.href}>
+            <span class="project-number">0{index + 4}</span>
+            <h3>{project.title}</h3>
+            <p>{project.body}</p>
+            <span class="other-evidence">{project.evidence}</span>
+            <span class="card-arrow" aria-hidden="true">↗</span>
           </a>
         ))}
       </div>
     </div>
   </section>
 
-  <section class="section">
-    <div class="container about-grid">
-      <div><p class="eyebrow">{t.sections.about}</p><h2>{t.sections.about}</h2></div>
-      <div class="reading"><p class="lede">{t.aboutShort}</p><a href={localizedPath(locale, '/about')}>{t.nav.about} →</a></div>
+  <section class="closing-section">
+    <div class="container closing-grid">
+      <p class="eyebrow">{t.sections.about}</p>
+      <p class="closing-statement">{t.aboutShort}</p>
+      <div class="button-row"><a class="button" href={localizedPath(locale, '/about')}>{t.nav.about} →</a><a class="text-link" href="mailto:jbencao37@gmail.com">Email ↗</a></div>
     </div>
   </section>
 </BaseLayout>
