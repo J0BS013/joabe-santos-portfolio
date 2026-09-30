@@ -1,0 +1,23 @@
+---
+import { localeLabels, locales, localizedPath, type Locale } from '../lib/i18n';
+
+interface Props { locale: Locale; routePath: string; }
+const { locale, routePath } = Astro.props;
+---
+
+<nav class="language-switcher" aria-label="Language">
+  {locales.map((item) => (
+    <a
+      href={localizedPath(item, routePath)}
+      aria-current={item === locale ? 'page' : undefined}
+      lang={item === 'pt-br' ? 'pt-BR' : item}
+    >{localeLabels[item]}</a>
+  ))}
+</nav>
+
+<style>
+  .language-switcher { align-items: center; display: flex; gap: 0.4rem; }
+  a { color: var(--muted); font-family: var(--mono); font-size: 0.76rem; font-weight: 700; padding: 0.25rem; text-decoration: none; }
+  a + a::before { color: var(--rule); content: '·'; margin-right: 0.55rem; }
+  a[aria-current='page'] { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; }
+</style>

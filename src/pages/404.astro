@@ -1,0 +1,7 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { localizedPath } from '../lib/i18n';
+---
+<BaseLayout locale="en" routePath="/" noIndex title="Page not found — Joabe Santos" description="The requested page could not be found.">
+  <section class="page-header container"><p class="eyebrow">404</p><h1>Page not found.</h1><p class="lede">The route may have changed, but the work is still here.</p><a class="button" href={localizedPath('en', '/')}>Return home</a></section>
+</BaseLayout>

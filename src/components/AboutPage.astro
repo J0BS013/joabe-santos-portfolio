@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { copy } from '../data/site';
+import { localizedPath, type Locale } from '../lib/i18n';
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const t = copy[locale];
+const roles = locale === 'en' ? [
+  ['2025—Now', 'Associate Decision Scientist', 'Capgemini · global insurance client'],
+  ['2024—2025', 'Data Analyst, BI & Analytics Engineering', 'AB InBev · BEES Global'],
+  ['2022—2024', 'Junior Data Analyst', 'AB InBev · BEES Global'],
+  ['2022', 'Junior Data Analyst', 'Bluma · Singu / Natura Group'],
+] : locale === 'pt-br' ? [
+  ['2025—Atual', 'Associate Decision Scientist', 'Capgemini · cliente global de seguros'],
+  ['2024—2025', 'Data Analyst, BI & Analytics Engineering', 'AB InBev · BEES Global'],
+  ['2022—2024', 'Junior Data Analyst', 'AB InBev · BEES Global'],
+  ['2022', 'Junior Data Analyst', 'Bluma · Singu / Natura Group'],
+] : [
+  ['2025—Actual', 'Associate Decision Scientist', 'Capgemini · cliente global de seguros'],
+  ['2024—2025', 'Data Analyst, BI & Analytics Engineering', 'AB InBev · BEES Global'],
+  ['2022—2024', 'Junior Data Analyst', 'AB InBev · BEES Global'],
+  ['2022', 'Junior Data Analyst', 'Bluma · Singu / Natura Group'],
+];
+---
+<BaseLayout locale={locale} routePath="/about" title={`${t.nav.about} — Joabe Santos`} description={t.aboutShort}>
+  <header class="page-header container"><p class="eyebrow">{t.nav.about}</p><h1>{t.aboutTitle}</h1></header>
+  <section class="section"><div class="container about-grid"><aside><p class="eyebrow">Decision science · Analytics engineering</p></aside><div class="prose">{t.aboutBody.map((paragraph) => <p class="lede">{paragraph}</p>)}</div></div></section>
+  <section class="section"><div class="container about-grid"><div><h2>{t.principlesTitle}</h2></div><ol class="timeline">{t.principles.map((principle, index) => <li><span class="project-number">0{index + 1}</span><strong>{principle}</strong></li>)}</ol></div></section>
+  <section class="section"><div class="container about-grid"><div><h2>{t.timelineTitle}</h2></div><ol class="timeline">{roles.map(([period, role, company]) => <li><span>{period}</span><div><strong>{role}</strong><span>{company}</span></div></li>)}</ol></div></section>
+  <section class="section"><div class="container about-grid"><div><h2>{t.educationTitle}</h2></div><div class="reading"><p><strong>Applied Statistics — Post-Graduation</strong><br />Ampli, 2022—2023</p><p><strong>Systems Analysis and Development</strong><br />FATEC São Paulo, 2019—2021</p><h3>{t.languagesTitle}</h3><p>{t.languages}</p><div class="button-row"><a class="button" href={localizedPath(locale, '/resume')}>{t.nav.resume} →</a><a class="button secondary" href="mailto:jbencao37@gmail.com">Email</a></div></div></div></section>
+</BaseLayout>

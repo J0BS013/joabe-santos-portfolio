@@ -1,0 +1,43 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectVisual from './ProjectVisual.astro';
+import { localizedPath, type Locale } from '../lib/i18n';
+import { copy, type CaseSlug } from '../data/site';
+
+interface Props { locale: Locale; slug: CaseSlug; }
+const { locale, slug } = Astro.props;
+const entries = await getCollection('caseStudies', ({ data }) => data.locale === locale && data.slug === slug);
+const entry = entries[0];
+if (!entry) throw new Error(`Missing case study: ${locale}/${slug}`);
+const { Content, headings } = await render(entry);
+const data = entry.data;
+const t = copy[locale];
+const labels = locale === 'en'
+  ? { role: 'Role', year: 'Year', data: 'Data', evidence: 'Evidence', contents: 'On this page', limitation: 'Limitation' }
+  : locale === 'pt-br'
+    ? { role: 'Papel', year: 'Ano', data: 'Dados', evidence: 'Evidências', contents: 'Nesta página', limitation: 'Limitação' }
+    : { role: 'Rol', year: 'Año', data: 'Datos', evidence: 'Evidencia', contents: 'En esta página', limitation: 'Limitación' };
+---
+<BaseLayout locale={locale} routePath={`/work/${slug}`} title={`${data.title} — Joabe Santos`} description={data.description} image={data.image}>
+  <header class="case-header container">
+    <p class="eyebrow">0{data.order} · {data.eyebrow}</p>
+    <h1>{data.title}</h1>
+    <p class="case-question">{data.question}</p>
+    <dl class="case-meta">
+      <div><dt>{labels.role}</dt><dd>{data.role}</dd></div><div><dt>{labels.year}</dt><dd>{data.year}</dd></div><div><dt>{labels.data}</dt><dd>{data.dataLabel}</dd></div><div><dt>{labels.limitation}</dt><dd>{data.limitations[0]}</dd></div>
+    </dl>
+  </header>
+  <section class="container">
+    <figure class="project-figure case-visual"><ProjectVisual slug={slug} alt={data.imageAlt ?? data.title} eager /><figcaption>{data.title} · source commit {data.sourceCommit.slice(0, 7)}</figcaption></figure>
+  </section>
+  <div class="case-body container">
+    <aside class="case-aside">
+      <p class="eyebrow">{labels.evidence}</p>
+      <ul>{data.evidence.map((item) => <li><strong>{item.value}</strong><br /><span class="muted">{item.label}</span></li>)}</ul>
+      <p class="eyebrow">{labels.contents}</p>
+      <nav><ul>{headings.filter((heading) => heading.depth === 2).map((heading) => <li><a href={`#${heading.slug}`}>{heading.text}</a></li>)}</ul></nav>
+    </aside>
+    <article class="prose"><Content /><div class="button-row"><a class="button" href={data.repoUrl}>{t.sections.repository} ↗</a>{data.demoUrl && <a class="button secondary" href={data.demoUrl}>{t.sections.liveDemo} ↗</a>}<a class="button secondary" href={localizedPath(locale, '/work')}>{t.nav.work} →</a></div></article>
+  </div>
+</BaseLayout>

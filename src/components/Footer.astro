@@ -1,0 +1,31 @@
+---
+import type { Locale } from '../lib/i18n';
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const labels = {
+  en: { note: 'São Paulo · UTC−3', contact: 'Contact' },
+  'pt-br': { note: 'São Paulo · UTC−3', contact: 'Contato' },
+  es: { note: 'São Paulo · UTC−3', contact: 'Contacto' },
+}[locale];
+---
+
+<footer>
+  <div class="footer-inner container">
+    <div><strong>Joabe Santos</strong><span>{labels.note}</span></div>
+    <nav aria-label={labels.contact}>
+      <a href="mailto:jbencao37@gmail.com">Email</a>
+      <a href="https://www.linkedin.com/in/joabe-santos">LinkedIn</a>
+      <a href="https://github.com/J0BS013">GitHub</a>
+    </nav>
+    <span>© {new Date().getFullYear()}</span>
+  </div>
+</footer>
+
+<style>
+  footer { border-top: 1px solid var(--rule); padding-block: var(--space-5); }
+  .footer-inner { align-items: start; display: grid; gap: 2rem; grid-template-columns: 1fr auto auto; }
+  strong, span { display: block; }
+  span { color: var(--muted); }
+  nav { display: flex; flex-wrap: wrap; gap: 1rem; }
+  @media (max-width: 42rem) { .footer-inner { grid-template-columns: 1fr; } }
+</style>

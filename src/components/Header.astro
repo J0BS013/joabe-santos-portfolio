@@ -1,0 +1,40 @@
+---
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import { copy } from '../data/site';
+import { localizedPath, type Locale } from '../lib/i18n';
+
+interface Props { locale: Locale; routePath: string; }
+const { locale, routePath } = Astro.props;
+const t = copy[locale];
+const navItems = [
+  { label: t.nav.work, route: '/work' },
+  { label: t.nav.about, route: '/about' },
+  { label: t.nav.resume, route: '/resume' },
+];
+---
+
+<header>
+  <div class="header-inner container">
+    <a class="brand" href={localizedPath(locale, '/')}>Joabe Santos</a>
+    <nav class="primary-nav" aria-label="Primary navigation">
+      {navItems.map((item) => (
+        <a href={localizedPath(locale, item.route)} aria-current={routePath === item.route ? 'page' : undefined}>{item.label}</a>
+      ))}
+    </nav>
+    <LanguageSwitcher locale={locale} routePath={routePath} />
+  </div>
+</header>
+
+<style>
+  header { background: color-mix(in srgb, var(--paper) 94%, transparent); border-bottom: 1px solid var(--rule); position: sticky; top: 0; z-index: 20; backdrop-filter: blur(10px); }
+  .header-inner { align-items: center; display: grid; gap: 1rem; grid-template-columns: 1fr auto auto; min-height: 4.5rem; }
+  .brand { color: var(--ink); font-family: var(--serif); font-size: 1.25rem; font-weight: 650; text-decoration: none; }
+  .primary-nav { display: flex; gap: 1.25rem; }
+  .primary-nav a { color: var(--muted); font-weight: 650; text-decoration: none; }
+  .primary-nav a:hover, .primary-nav a[aria-current='page'] { color: var(--ink); }
+  .primary-nav a[aria-current='page'] { text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; }
+  @media (max-width: 42rem) {
+    .header-inner { grid-template-columns: 1fr auto; padding-block: 0.75rem; }
+    .primary-nav { grid-column: 1 / -1; grid-row: 2; justify-content: space-between; order: 3; }
+  }
+</style>

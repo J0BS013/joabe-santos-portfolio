@@ -1,0 +1,17 @@
+{
+  "thin-file-credit-decision-engine.png": {
+    "repository": "https://github.com/J0BS013/thin-file-credit-decision-engine",
+    "commit": "96806600894d401e71f0d572d6863ac7bcf29535",
+    "source": "docs/assets/credit-decision-simulator.png"
+  },
+  "subscription-analytics-dbt.png": {
+    "repository": "https://github.com/J0BS013/subscription-analytics-dbt",
+    "commit": "40f74e571639a4aee525c5bbaf928ba9d7271d3a",
+    "source": "docs/assets/subscription-analytics-dashboard.png"
+  },
+  "marketplace-event-lakehouse": {
+    "repository": "https://github.com/J0BS013/marketplace-event-lakehouse",
+    "commit": "7b5a7e037408911d5ee15fdc49b015041a21f50c",
+    "source": "code-native diagram in src/components/ProjectVisual.astro"
+  }
+}

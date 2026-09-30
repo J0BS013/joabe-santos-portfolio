@@ -1,0 +1,35 @@
+---
+import type { CaseSlug } from '../data/site';
+import { withBase } from '../lib/i18n';
+
+interface Props { slug: CaseSlug; alt: string; eager?: boolean; }
+const { slug, alt, eager = false } = Astro.props;
+const images: Partial<Record<CaseSlug, { src: string; width: number; height: number }>> = {
+  'thin-file-credit-decision-engine': { src: '/images/projects/thin-file-credit-decision-engine.png', width: 1440, height: 1100 },
+  'subscription-analytics-dbt': { src: '/images/projects/subscription-analytics-dbt.png', width: 1440, height: 1100 },
+};
+const image = images[slug];
+---
+
+{image ? (
+  <img src={withBase(image.src)} alt={alt} width={image.width} height={image.height} loading={eager ? 'eager' : 'lazy'} decoding="async" />
+) : (
+  <svg viewBox="0 0 800 450" role="img" aria-labelledby={`title-${slug} desc-${slug}`}>
+    <title id={`title-${slug}`}>{alt}</title>
+    <desc id={`desc-${slug}`}>Event records move from immutable Bronze storage through validated and deduplicated Silver tables into business-ready Gold models.</desc>
+    <rect width="800" height="450" fill="#fbf9f4" />
+    <g fill="none" stroke="#d8d1c5" stroke-width="2"><path d="M250 225h90M460 225h90" /></g>
+    <g font-family="Arial, sans-serif">
+      <rect x="55" y="135" width="195" height="180" rx="2" fill="#f4f0e8" stroke="#181817" />
+      <text x="78" y="180" font-size="18" font-weight="700" fill="#963923">BRONZE</text>
+      <text x="78" y="220" font-size="15" fill="#181817">Immutable events</text><text x="78" y="248" font-size="15" fill="#181817">Event + ingestion time</text><text x="78" y="276" font-size="15" fill="#181817">Replayable source</text>
+      <rect x="340" y="135" width="120" height="180" rx="2" fill="#f4f0e8" stroke="#181817" />
+      <text x="365" y="180" font-size="18" font-weight="700" fill="#963923">SILVER</text>
+      <text x="361" y="220" font-size="14" fill="#181817">Deduplicate</text><text x="361" y="248" font-size="14" fill="#181817">Quarantine</text><text x="361" y="276" font-size="14" fill="#181817">SCD Type 2</text>
+      <rect x="550" y="135" width="195" height="180" rx="2" fill="#f4f0e8" stroke="#181817" />
+      <text x="575" y="180" font-size="18" font-weight="700" fill="#963923">GOLD</text>
+      <text x="575" y="220" font-size="15" fill="#181817">Sequence-aware funnel</text><text x="575" y="248" font-size="15" fill="#181817">GMV + revenue</text><text x="575" y="276" font-size="15" fill="#181817">SLA evidence</text>
+      <text x="55" y="370" font-size="13" fill="#64615b">PySpark · Delta Lake · Prefect · replay-safe MERGE</text>
+    </g>
+  </svg>
+)}

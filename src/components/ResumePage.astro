@@ -1,0 +1,12 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { copy } from '../data/site';
+import { withBase, type Locale } from '../lib/i18n';
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const t = copy[locale];
+---
+<BaseLayout locale={locale} routePath="/resume" title={`${t.resumeTitle} — Joabe Santos`} description={t.resumeBody}>
+  <header class="page-header container"><p class="eyebrow">PDF · 2 pages</p><h1>{t.resumeTitle}</h1><p class="lede">{t.resumeBody}</p><div class="button-row"><a class="button" href={withBase('/resume/joabe-santos-resume.pdf')} download>{t.resumeDownload}</a><a class="button secondary" href="mailto:jbencao37@gmail.com">Email</a></div><p class="muted" style="margin-top: 1rem">{t.updated}</p></header>
+  <section class="section"><div class="container about-grid"><div><p class="eyebrow">Public version</p></div><div class="reading"><p>{locale === 'en' ? 'This downloadable version is designed for public distribution: it keeps the professional record, education and contact links while omitting a phone number and confidential client identification.' : locale === 'pt-br' ? 'Esta versão foi preparada para distribuição pública: mantém a trajetória profissional, a formação e os links de contato, mas omite telefone e identificação confidencial do cliente.' : 'Esta versión fue preparada para distribución pública: mantiene la trayectoria profesional, la formación y los enlaces de contacto, pero omite teléfono e identificación confidencial del cliente.'}</p></div></div></section>
+</BaseLayout>

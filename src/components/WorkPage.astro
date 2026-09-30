@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectVisual from './ProjectVisual.astro';
+import { copy, otherProjects, projectLinks, selectedProjects } from '../data/site';
+import { localizedPath, type Locale } from '../lib/i18n';
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const t = copy[locale];
+const title = `${t.nav.work} — Joabe Santos`;
+---
+<BaseLayout locale={locale} routePath="/work" title={title} description={t.workIntro}>
+  <header class="page-header container"><p class="eyebrow">Portfolio</p><h1>{t.nav.work}</h1><p class="lede">{t.workIntro}</p></header>
+  <section class="section"><div class="container project-list">
+    {selectedProjects[locale].map((project) => (
+      <article class="project-card">
+        <div class="project-number">{project.number}</div>
+        <div><p class="eyebrow">{project.role}</p><h3>{project.title}</h3><p class="project-question">{project.question}</p><ul class="evidence-list">{project.evidence.map((item) => <li>{item}</li>)}</ul><div class="project-links"><a href={localizedPath(locale, `/work/${project.slug}`)}>{t.sections.viewCase} →</a><a href={projectLinks[project.slug].repo}>{t.sections.repository} ↗</a>{projectLinks[project.slug].demo && <a href={projectLinks[project.slug].demo}>{t.sections.liveDemo} ↗</a>}</div></div>
+        <figure class="project-figure"><ProjectVisual slug={project.slug} alt={project.title} /><figcaption>{project.number === '01' ? 'Source commit 9680660' : project.number === '02' ? 'Source commit 40f74e5' : 'Source commit 7b5a7e0'}</figcaption></figure>
+      </article>
+    ))}
+  </div></section>
+  <section class="section"><div class="container"><h2>{t.sections.other}</h2><div class="other-list">{otherProjects[locale].map((project) => <a class="other-item" href={project.href}><h3>{project.title}</h3><p>{project.body}</p><span class="evidence">{project.evidence}</span><span aria-hidden="true">↗</span></a>)}</div></div></section>
+</BaseLayout>
