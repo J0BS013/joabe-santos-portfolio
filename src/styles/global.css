@@ -106,10 +106,10 @@ p { margin: 0 0 1.15rem; }
 .other-card p { color: var(--muted); }
 .other-evidence { border-top: 1px solid color-mix(in srgb, var(--ink) 15%, transparent); font-family: var(--mono); font-size: .72rem; margin-top: auto; padding-top: 1rem; }
 .card-arrow { font-size: 1.25rem; position: absolute; right: 1.5rem; top: 1.25rem; }
-.closing-section { background: var(--green); color: white; padding-block: var(--space-6); }
-.closing-grid { display: grid; gap: 2rem; grid-template-columns: .35fr 1.65fr; }
+.closing-section { background: var(--green); color: white; padding-block: clamp(3.5rem, 6vw, 5.5rem); }
+.closing-grid { display: grid; gap: 1.5rem clamp(2.5rem, 6vw, 6rem); grid-template-columns: minmax(9rem, .3fr) minmax(0, 1.7fr); }
 .closing-grid .eyebrow { color: #9fd8bc; }
-.closing-statement { font-family: var(--serif); font-size: clamp(2rem, 4vw, 4rem); line-height: 1.08; max-width: 22ch; }
+.closing-statement { font-family: var(--serif); font-size: clamp(1.8rem, 2.65vw, 3rem); line-height: 1.16; max-width: 42ch; }
 .closing-grid .button-row { grid-column: 2; }
 .closing-grid .button { background: white; border-color: white; color: var(--green); }
 .closing-grid .text-link { color: white; }
@@ -118,6 +118,15 @@ p { margin: 0 0 1.15rem; }
 .page-header { padding-block: var(--space-6) var(--space-5); }
 .page-header h1 { max-width: 11ch; }
 .page-header .lede { margin-top: var(--space-4); max-width: 58ch; }
+.resume-page { padding-block: clamp(4rem, 8vw, 7.5rem); }
+.resume-shell { align-items: end; display: grid; gap: clamp(3rem, 8vw, 8rem); grid-template-columns: minmax(0, 1.25fr) minmax(18rem, .75fr); }
+.resume-main h1 { font-size: clamp(3.75rem, 6vw, 5.8rem); margin-block: var(--space-2) 0; max-width: none; }
+.resume-main .lede { font-size: clamp(1.3rem, 2.1vw, 1.8rem); margin-top: var(--space-3); max-width: 45ch; }
+.resume-main .button-row { margin-top: var(--space-3); }
+.resume-updated { color: var(--muted); font-size: .85rem; margin-top: 1rem; }
+.resume-note { background: #eef2ec; border: 1px solid var(--rule); border-radius: 1.25rem; padding: clamp(1.4rem, 3vw, 2rem); }
+.resume-note .eyebrow { margin-bottom: 1rem; }
+.resume-note p:last-child { color: var(--muted); font-size: 1rem; line-height: 1.65; margin: 0; }
 .work-header { display: grid; gap: 1rem; grid-template-columns: 1fr .8fr; }
 .work-header .eyebrow, .work-header h1 { grid-column: 1; }
 .work-header .lede { align-self: end; grid-column: 2; grid-row: 1 / span 2; }
@@ -193,7 +202,7 @@ p { margin: 0 0 1.15rem; }
 }
 
 @media (max-width: 52rem) {
-  .section-heading, .case-body, .about-intro-grid, .about-section-grid, .work-header { grid-template-columns: 1fr; }
+  .section-heading, .case-body, .about-intro-grid, .about-section-grid, .resume-shell, .work-header { grid-template-columns: 1fr; }
   .section-heading > p { justify-self: start; }
   .section-heading > .text-link { justify-self: start; margin-bottom: 0; }
   .work-header .eyebrow, .work-header h1, .work-header .lede { grid-column: 1; grid-row: auto; }
@@ -205,6 +214,8 @@ p { margin: 0 0 1.15rem; }
   .case-aside { position: static; }
   .closing-grid { grid-template-columns: 1fr; }
   .closing-grid .button-row { grid-column: 1; }
+  .closing-statement { max-width: 34ch; }
+  .resume-note { max-width: 42rem; }
 }
 
 @media (max-width: 38rem) {
@@ -212,6 +223,10 @@ p { margin: 0 0 1.15rem; }
   .container { width: min(calc(100% - 1.25rem), var(--max)); }
   .hero { padding-top: 3.5rem; }
   .hero h1 { font-size: clamp(2.8rem, 14vw, 4.3rem); }
+  .closing-section { padding-block: 3.5rem; }
+  .closing-statement { font-size: clamp(1.65rem, 7vw, 2.25rem); }
+  .resume-page { padding-block: 3.5rem; }
+  .resume-main h1 { font-size: clamp(3.2rem, 16vw, 4.5rem); }
   .hero-grid { gap: 3.25rem; }
   .hero-capabilities { display: grid; }
   .project-showcase { border-radius: 1.25rem; padding: 1rem; }
