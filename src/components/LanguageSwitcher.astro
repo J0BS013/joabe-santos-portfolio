@@ -17,6 +17,6 @@ const { locale, routePath } = Astro.props;
 
 <style>
   .language-switcher { align-items: center; display: flex; gap: 0.2rem; }
-  a { color: var(--muted); font-family: var(--mono); font-size: 0.76rem; font-weight: 700; padding: 0.25rem; text-decoration: none; }
-  a[aria-current='page'] { background: #f1e7df; border-radius: 999px; color: var(--accent-dark); text-decoration: none; }
+  a, a:hover, a:focus, a:visited { border-bottom: 0 !important; color: var(--muted); font-family: var(--mono); font-size: 0.76rem; font-weight: 700; padding: .3rem .48rem; text-decoration: none !important; }
+  a[aria-current='page'] { background: #f1e7df; border-radius: 999px; color: var(--accent-dark); text-decoration: none !important; }
 </style>

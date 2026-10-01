@@ -37,39 +37,51 @@ const education = locale === 'en' ? [
   ['Posgrado en Estadística Aplicada', 'Ampli · 2022—2023'],
   ['Análisis y Desarrollo de Sistemas', 'FATEC São Paulo · 2019—2021'],
 ];
+const languages = locale === 'en' ? [
+  ['PT', 'Portuguese', 'Native'],
+  ['EN', 'English', 'Fluent'],
+  ['ES', 'Spanish', 'Intermediate'],
+] : locale === 'pt-br' ? [
+  ['PT', 'Português', 'Nativo'],
+  ['EN', 'Inglês', 'Fluente'],
+  ['ES', 'Espanhol', 'Intermediário'],
+] : [
+  ['PT', 'Portugués', 'Nativo'],
+  ['EN', 'Inglés', 'Fluido'],
+  ['ES', 'Español', 'Intermedio'],
+];
 ---
 
 <BaseLayout locale={locale} routePath="/about" title={`${t.nav.about} — Joabe Santos`} description={t.aboutShort}>
   <header class="about-hero container">
     <p class="eyebrow">{t.nav.about} · Decision science · Analytics engineering</p>
-    <div class="about-hero-grid">
-      <h1>{t.aboutTitle}</h1>
-      <div class="about-intro">
-        {t.aboutBody.map((paragraph, index) => <p class={index === 0 ? 'lede' : undefined}>{paragraph}</p>)}
-      </div>
+    <h1>{t.aboutTitle}</h1>
+    <div class="about-intro-grid">
+      <p class="lede">{t.aboutBody[0]}</p>
+      <div class="about-intro-copy">{t.aboutBody.slice(1).map((paragraph) => <p>{paragraph}</p>)}</div>
     </div>
   </header>
 
-  <section class="section about-band-soft">
+  <section class="section about-band about-band-soft">
     <div class="container about-section-grid">
       <div class="about-section-heading"><p class="eyebrow">01 · {sectionLabels.method}</p><h2>{t.principlesTitle}</h2></div>
-      <ol class="timeline about-section-content">{t.principles.map((principle, index) => <li><span class="project-number">0{index + 1}</span><strong>{principle}</strong></li>)}</ol>
+      <ol class="principles-grid about-section-content">{t.principles.map((principle, index) => <li><span class="project-number">0{index + 1}</span><strong>{principle}</strong></li>)}</ol>
     </div>
   </section>
 
-  <section class="section">
+  <section class="section about-band">
     <div class="container about-section-grid">
       <div class="about-section-heading"><p class="eyebrow">02 · {sectionLabels.career}</p><h2>{t.timelineTitle}</h2></div>
-      <ol class="timeline about-section-content">{roles.map(([period, role, company]) => <li><span>{period}</span><div><strong>{role}</strong><span>{company}</span></div></li>)}</ol>
+      <ol class="experience-timeline about-section-content">{roles.map(([period, role, company]) => <li><span class="experience-period">{period}</span><div><strong>{role}</strong><span>{company}</span></div></li>)}</ol>
     </div>
   </section>
 
-  <section class="section about-band-soft">
+  <section class="section about-band about-band-soft">
     <div class="container about-section-grid">
       <div class="about-section-heading"><p class="eyebrow">03 · {sectionLabels.background}</p><h2>{t.educationTitle}</h2></div>
       <div class="about-section-content">
         <div class="education-list">{education.map(([course, institution]) => <article class="education-item"><strong>{course}</strong><p>{institution}</p></article>)}</div>
-        <div class="about-languages"><h3>{t.languagesTitle}</h3><p>{t.languages}</p><div class="button-row"><a class="button" href={localizedPath(locale, '/resume')}>{t.nav.resume} →</a><a class="button secondary" href="mailto:jbencao37@gmail.com">Email</a></div></div>
+        <div class="about-languages"><h3>{t.languagesTitle}</h3><ul class="language-grid">{languages.map(([code, language, level]) => <li><span class="language-code">{code}</span><div><strong>{language}</strong><small>{level}</small></div></li>)}</ul><div class="button-row"><a class="button" href={localizedPath(locale, '/resume')}>{t.nav.resume} →</a><a class="button secondary" href="mailto:jbencao37@gmail.com">Email</a></div></div>
       </div>
     </div>
   </section>
