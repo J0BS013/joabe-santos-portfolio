@@ -16,8 +16,7 @@ const { locale, routePath } = Astro.props;
 </nav>
 
 <style>
-  .language-switcher { align-items: center; display: flex; gap: 0.4rem; }
+  .language-switcher { align-items: center; display: flex; gap: 0.2rem; }
   a { color: var(--muted); font-family: var(--mono); font-size: 0.76rem; font-weight: 700; padding: 0.25rem; text-decoration: none; }
-  a + a::before { color: var(--rule); content: '·'; margin-right: 0.55rem; }
-  a[aria-current='page'] { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; }
+  a[aria-current='page'] { background: #f1e7df; border-radius: 999px; color: var(--accent-dark); text-decoration: none; }
 </style>
