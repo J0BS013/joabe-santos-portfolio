@@ -5,7 +5,7 @@ order: 6
 title: Hevy Workout ETL
 eyebrow: Data Product
 description: A resilient API-to-dashboard data product that protects historical workout data, promotes trusted Medallion outputs and surfaces progression through an interactive app.
-role: Data engineer and analytics builder
+role: API ingestion · Medallion models · dashboard
 year: 2026
 dataKind: generated
 dataLabel: Versioned personal workout snapshot
@@ -25,11 +25,11 @@ evidence:
     value: "99 exercises"
   - label: Automated tests
     value: "56"
-limitations:
-  - The public dashboard uses a versioned snapshot and does not expose or refresh from a private API key.
+scope:
+  - Versioned personal snapshot; the public app requires no private API access.
 ---
 
-## The product
+## What this project is
 
 The project turns workout history from the Hevy API into a durable analytical product. It is both an ETL system and something tangible to use: a four-tab Streamlit dashboard for frequency, training volume, exercise progression and statistical consistency.
 
@@ -47,7 +47,7 @@ Bronze preserves the raw API-shaped history. Silver standardizes types, validate
 
 The dashboard consumes only Gold and Analytics. This boundary keeps presentation logic out of ingestion and lets tests verify the same tables the user sees.
 
-## Evidence
+## Results and validation
 
 The published snapshot contains 510 workouts from October 2023 through March 2026 and 4.33 million kilograms of recorded training volume. The analytical layer evaluates 99 exercise histories; 49 show a statistically significant time trend under the defined OLS rule.
 
@@ -59,12 +59,12 @@ Progression is estimated per exercise with ordinary least squares over time. Eac
 
 These statistics describe the recorded history. They do not prove that a training program caused a change or that every significant slope is practically meaningful.
 
-## What I rejected
+## Design choice
 
 I rejected an app that queried the API on every page load. It would couple availability to a third party, risk leaking credentials and make the displayed result change without a versioned data boundary. I also rejected CSV as the pipeline contract because it loses types that matter across layers.
 
 The chosen design makes freshness explicit. A green repository means the tested code and versioned snapshot are healthy; it does not imply that the public app continuously ingests new private workouts.
 
-## Limitations and next step
+## How to interpret the dashboard
 
-The snapshot represents one person and is not a fitness recommendation. OLS does not account for program changes, injuries or exercise substitutions. A future operational version could run scheduled private ingestion, publish only anonymized aggregates and alert on freshness without exposing raw workouts or credentials.
+The dashboard describes one versioned training history; it is an analytical product, not a fitness recommendation. OLS does not attribute changes to a program and may reflect injuries or exercise substitutions. Private scheduled ingestion can refresh the snapshot while deployment continues to publish only anonymized aggregates, keeping raw workouts and credentials outside the public app.

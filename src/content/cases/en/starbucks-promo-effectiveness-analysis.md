@@ -5,7 +5,7 @@ order: 4
 title: Starbucks Promo Effectiveness
 eyebrow: Decision Analytics
 description: An observational promotion analysis that attributes repeated offers at exposure grain, quantifies economic signals and defines the experiment required for a causal decision.
-role: Decision analyst and builder
+role: Attribution · economics · experiment design
 year: 2026
 dataKind: public
 dataLabel: Simulated Starbucks behavior dataset
@@ -24,13 +24,15 @@ evidence:
     value: "+84.6%"
   - label: Automated tests
     value: "22"
-limitations:
-  - Observational behavior with no randomized holdout; reported revenue is not incremental lift.
+scope:
+  - Observed customer behavior used to prioritize a controlled experiment.
 ---
 
-## The decision
+## What this project is
 
-The useful question was not simply which offer had the highest completion rate. It was which promotion should advance to a controlled test, under what economic guardrails, and how much confidence the historical event stream supports.
+Starbucks Promo Effectiveness is an end-to-end analysis of repeated promotional exposures. It reconstructs which offer each view, transaction and completion belongs to, compares discount, BOGO and informational campaigns, and converts observational findings into a controlled-test recommendation.
+
+The useful question is not simply which offer had the highest completion rate. It is which promotion should advance to a controlled test, under what economic guardrails, and how much confidence the historical event stream supports.
 
 The recommendation is to prioritize discount offers as the next test, retain BOGO as a challenger with stricter economics, and avoid treating informational messages as conversion-generating promotions. This is a test prioritization decision, not a rollout claim.
 
@@ -40,7 +42,7 @@ Customers can receive the same offer more than once. Views, transactions and com
 
 I modeled one row per received offer, created a unique exposure identifier and assigned each downstream event to the most recent eligible exposure inside its validity window. Each event can be attributed only once. Missing offer duration fails the pipeline instead of silently creating an unlimited window.
 
-## Evidence
+## Findings
 
 After demographic quality checks, the analysis covers 14,825 customers, 115,609 offer exposures and 10 offers. Viewing was associated with completion increasing from 35.4% to 62.2%, but a view is post-exposure behavior and cannot be used as a randomized treatment.
 
@@ -48,7 +50,7 @@ Discount offers had the strongest observed completion association: +84.6% betwee
 
 Those numbers describe observed behavior and scenario economics. They do not estimate incremental causal value.
 
-## Decision design
+## Experiment design
 
 The decision memo translates the analysis into a test plan. Eligible customers should be randomly assigned before exposure, with intention-to-treat as the primary analysis. The primary metric is incremental contribution margin per eligible customer; completion, conversion, order value and take-up are secondary metrics.
 
@@ -60,10 +62,10 @@ I rejected a simple viewed-versus-not-viewed causal story. Viewing happens after
 
 A separate synthetic experiment module demonstrates balanced assignment, treatment-effect estimation and power planning. Simulated causal outputs are never mixed with the Starbucks observations.
 
-## Engineering quality
+## Validation and reproducibility
 
-The pipeline is reproducible from source events through exposure-grain outputs, figures and the decision memo. Twenty-two tests cover attribution invariants, economic calculations and causal helpers. The repository keeps analytical claims, assumptions and limitations adjacent to the outputs they qualify.
+The pipeline is reproducible from source events through exposure-grain outputs, figures and the decision memo. Twenty-two tests cover attribution invariants, economic calculations and causal helpers. Analytical claims, assumptions and evidence boundaries stay adjacent to the outputs they qualify.
 
-## Limitations and next test
+## What the recommendation means
 
-There is no randomized holdout, reward cost is not a complete margin model, and segment differences may reflect customer composition. The next step is therefore the pre-registered discount experiment—not a full rollout—followed by balance checks, confidence intervals and guardrail monitoring at the planned sample size.
+The analysis supports prioritizing a pre-registered discount experiment, not declaring a full rollout winner. A valid decision uses randomized holdout, a complete contribution-margin definition, balance checks, confidence intervals and guardrail monitoring at the planned sample size.

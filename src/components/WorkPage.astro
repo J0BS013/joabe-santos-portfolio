@@ -8,13 +8,14 @@ const { locale } = Astro.props;
 const t = copy[locale];
 const title = `${t.nav.work} — Joabe Santos`;
 const sourceCommits = ['9680660', '40f74e5', '7b5a7e0'];
+const sourceLabel = locale === 'en' ? 'Source' : locale === 'pt-br' ? 'Fonte' : 'Fuente';
 ---
 <BaseLayout locale={locale} routePath="/work" title={title} description={t.workIntro}>
   <header class="page-header container work-header"><p class="eyebrow">Portfolio · 01—06</p><h1>{t.nav.work}</h1><p class="lede">{t.workIntro}</p></header>
   <section class="selected-work container" aria-label={t.sections.selected}>
     {selectedProjects[locale].map((project, index) => (
       <article class="project-showcase" data-project={project.slug}>
-        <header class="project-showcase-header"><span class="project-number">{project.number}</span><span>{project.role}</span><span class="source-label">Source · {sourceCommits[index]}</span></header>
+        <header class="project-showcase-header"><span class="project-number">{project.number}</span><span>{project.role}</span><span class="source-label">{sourceLabel} · {sourceCommits[index]}</span></header>
         <div class="project-showcase-grid">
           <figure class="project-visual"><ProjectVisual slug={project.slug} alt={project.title} eager={index === 0} /></figure>
           <div class="project-copy"><h3><a href={localizedPath(locale, `/work/${project.slug}`)}>{project.title}</a></h3><p class="project-question">{project.question}</p><ul class="evidence-list">{project.evidence.map((item) => <li>{item}</li>)}</ul><div class="project-links"><a class="button compact" href={localizedPath(locale, `/work/${project.slug}`)}>{t.sections.viewCase} →</a>{projectLinks[project.slug].demo && <a href={projectLinks[project.slug].demo}>{t.sections.liveDemo} ↗</a>}<a href={projectLinks[project.slug].repo}>{t.sections.repository} ↗</a></div></div>

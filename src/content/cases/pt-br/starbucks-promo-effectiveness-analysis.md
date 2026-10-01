@@ -5,7 +5,7 @@ order: 4
 title: Starbucks Promo Effectiveness
 eyebrow: Decision Analytics
 description: Uma análise observacional de promoções que atribui ofertas repetidas no grão da exposição, quantifica sinais econômicos e define o experimento necessário para uma decisão causal.
-role: Analista de decisão e builder
+role: Atribuição · economia · desenho experimental
 year: 2026
 dataKind: public
 dataLabel: Dataset simulado de comportamento Starbucks
@@ -24,13 +24,15 @@ evidence:
     value: "+84,6%"
   - label: Testes automatizados
     value: "22"
-limitations:
-  - Comportamento observacional sem holdout randomizado; a receita reportada não é lift incremental.
+scope:
+  - Comportamento observado usado para priorizar um experimento controlado.
 ---
 
-## A decisão
+## O que é este projeto
 
-A pergunta útil não era apenas qual oferta teve a maior taxa de conclusão. Era qual promoção deveria avançar para um teste controlado, sob quais limites econômicos e quanta confiança o histórico de eventos sustenta.
+Starbucks Promo Effectiveness é uma análise ponta a ponta de exposições promocionais repetidas. Ela reconstrói a qual oferta pertencem cada visualização, transação e conclusão, compara campanhas de desconto, BOGO e informativas e converte os achados observacionais em uma recomendação de teste controlado.
+
+A pergunta útil não é apenas qual oferta teve a maior taxa de conclusão. É qual promoção deve avançar para um teste controlado, sob quais limites econômicos e quanta confiança o histórico de eventos sustenta.
 
 A recomendação é priorizar descontos no próximo teste, manter BOGO como challenger com guardrails econômicos mais rígidos e não tratar mensagens informativas como promoções geradoras de conversão. É uma decisão de priorização de teste, não de rollout.
 
@@ -40,7 +42,7 @@ Um cliente pode receber a mesma oferta várias vezes. Visualizações, transaç�
 
 Modelei uma linha por oferta recebida, criei um identificador único de exposição e atribuí cada evento posterior à exposição elegível mais recente dentro da validade. Cada evento só pode ser atribuído uma vez. A ausência da duração interrompe o pipeline em vez de criar silenciosamente uma janela ilimitada.
 
-## Evidências
+## Principais achados
 
 Após os controles de qualidade demográfica, a análise cobre 14.825 clientes, 115.609 exposições e 10 ofertas. A visualização esteve associada a uma conclusão que passou de 35,4% para 62,2%, mas visualizar é um comportamento pós-exposição e não pode definir um tratamento randomizado.
 
@@ -48,7 +50,7 @@ Os descontos tiveram a associação observada mais forte: +84,6% entre os grupos
 
 Esses valores descrevem comportamento observado e economia de cenário. Não estimam valor causal incremental.
 
-## Desenho da decisão
+## Desenho do experimento
 
 O decision memo transforma a análise em plano de teste. Clientes elegíveis devem ser randomizados antes da exposição, com intenção de tratar como análise principal. A métrica primária é margem de contribuição incremental por cliente elegível; conclusão, conversão, ticket e adesão são métricas secundárias.
 
@@ -60,10 +62,10 @@ Descartei uma narrativa causal simples entre quem viu e quem não viu. A visuali
 
 Um módulo sintético separado demonstra randomização balanceada, estimação de efeito e planejamento de poder. Resultados causais simulados nunca são misturados às observações Starbucks.
 
-## Qualidade de engenharia
+## Validação e reprodutibilidade
 
-O pipeline é reproduzível dos eventos até as exposições, figuras e decision memo. Vinte e dois testes cobrem invariantes de atribuição, cálculos econômicos e helpers causais. Alegações, premissas e limitações permanecem próximas aos outputs que qualificam.
+O pipeline é reproduzível dos eventos até as exposições, figuras e decision memo. Vinte e dois testes cobrem invariantes de atribuição, cálculos econômicos e helpers causais. Alegações, premissas e alcance da evidência permanecem próximos aos outputs que qualificam.
 
-## Limitações e próximo teste
+## O que a recomendação significa
 
-Não há holdout randomizado, o custo da recompensa não é um modelo completo de margem e diferenças entre segmentos podem refletir composição. O próximo passo é o experimento pré-registrado de desconto—não um rollout—seguido por checagens de balanceamento, intervalos de confiança e monitoramento de guardrails.
+A análise sustenta priorizar um experimento pré-registrado de desconto, não declarar um vencedor para rollout. Uma decisão válida usa holdout randomizado, definição completa de margem de contribuição, checagens de balanceamento, intervalos de confiança e monitoramento de guardrails no tamanho de amostra planejado.

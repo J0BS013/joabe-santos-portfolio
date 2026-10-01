@@ -5,7 +5,7 @@ order: 5
 title: Retailer RFM Decisioning
 eyebrow: Customer Analytics
 description: Un pipeline reproducible de segmentación que convierte comportamiento RFM en acciones de campaña sensibles al costo, validadas con clustering y expuestas mediante outputs analíticos confiables.
-role: Analytics engineer y analista de decisiones
+role: Segmentación · política de campaña · pipeline
 year: 2026
 dataKind: public
 dataLabel: UCI Online Retail II
@@ -24,13 +24,15 @@ evidence:
     value: "68,2%"
   - label: Silhouette de k-means
     value: "0,61"
-limitations:
-  - La economía de campaña usa supuestos explícitos de escenario, no respuesta incremental medida.
+scope:
+  - Transacciones públicas combinadas con escenarios económicos explícitos de campaña.
 ---
 
-## La decisión
+## Qué es este proyecto
 
-La segmentación solo importa cuando cambia una acción. El proyecto pregunta qué clientes deben recibir inversión de retención, lealtad o reactivación—y cuáles no deben recibir contacto pagado porque el valor esperado no justifica el costo.
+Retailer RFM Decisioning es un pipeline reproducible de customer analytics construido sobre 1,04 millones de transacciones públicas. Crea segmentos RFM interpretables, compara su estructura con k-means y asigna una acción de campaña —o `do_not_target`— mediante supuestos explícitos de respuesta, margen y costo de contacto.
+
+La segmentación solo importa cuando cambia una acción. La pregunta práctica es qué clientes deben recibir inversión de retención, lealtad o reactivación y cuáles no deben recibir contacto pagado porque el valor esperado no justifica el costo.
 
 El output combina una política RFM interpretable con una capa de decisión de campaña. Cada cliente recibe un segmento, una acción recomendada o `do_not_target` y un valor neto esperado bajo supuestos visibles.
 
@@ -40,7 +42,7 @@ El dataset público Online Retail II contiene 1.041.670 transacciones entre dici
 
 Los quintiles RFM crean segmentos deterministas y explicables. K-means sobre features transformadas funciona como validación, no como sustituto opaco. Cinco clusters produjeron un pico local de silhouette de 0,61 y apoyaron la estructura de comportamiento.
 
-## Evidencia
+## Hallazgos
 
 Champions son solo 22,0% de los clientes, pero concentran 68,2% de los ingresos. Promedian £9.361,66 de gasto, 17,1 pedidos y apenas 18,7 días desde su última compra. Loyal Customers representan 24,0% de los clientes y 15,5% de los ingresos.
 
@@ -48,7 +50,7 @@ At Risk es diferente: 14,0% de los clientes, 9,2% de los ingresos y £1.983,10 d
 
 Esa concentración hace ineficientes las campañas indiscriminadas. La inactividad de alto valor necesita una intervención diferente al comportamiento ocasional de bajo valor.
 
-## Capa de decisión
+## Capa de decisión de campaña
 
 La política combina respuesta base, conversión incremental, margen, costo de contacto e incentivo. Son supuestos explícitos de escenario, no conclusiones inferidas del dataset. El cliente se contacta solo si la acción tiene valor neto esperado positivo; de lo contrario, el output es `do_not_target`.
 
@@ -60,10 +62,10 @@ Descarté usar etiquetas de k-means como respuesta final. Los números de cluste
 
 También descarté contactar a todo cliente Lost. Su volumen parece atractivo, pero la baja frecuencia y pequeña participación en ingresos dificultan justificar un win-back amplio. Solo la porción de mayor valor debe pasar la regla económica positiva.
 
-## Calidad de ingeniería
+## Validación y reproducibilidad
 
 Pandera valida contratos, Parquet conserva outputs tipados y DuckDB permite inspección analítica. Pruebas, Docker y CI hacen reproducible el pipeline. Un artefacto versionado de métricas conecta las afirmaciones del README y del portafolio con los resultados generados.
 
-## Limitaciones y próxima prueba
+## Qué significa la recomendación
 
-RFM describe el pasado; no estima respuesta incremental ni lifetime value. Los supuestos deben calibrarse con un holdout aleatorio. El siguiente paso es un experimento estratificado por segmento que mida margen incremental, con presión de contacto y opt-out como guardrails.
+RFM describe el comportamiento pasado y la política evalúa escenarios transparentes; ninguno se presenta como respuesta incremental o lifetime value medido. El diseño recomendado para activación utiliza holdout estratificado por segmento y mide margen de contribución incremental, con presión de contacto y opt-out como guardrails.

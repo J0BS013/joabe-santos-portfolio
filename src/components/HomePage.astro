@@ -17,6 +17,11 @@ const heroLabels = locale === 'en'
     ? ['Sistemas de decisão', 'Métricas confiáveis', 'Estatística aplicada']
     : ['Sistemas de decisión', 'Métricas confiables', 'Estadística aplicada'];
 const sourceCommits = ['9680660', '40f74e5', '7b5a7e0'];
+const sectionEyebrows = locale === 'en'
+  ? { flagship: 'Flagship cases', method: 'Method', applied: 'Applied cases', source: 'Source' }
+  : locale === 'pt-br'
+    ? { flagship: 'Cases principais', method: 'Método', applied: 'Cases aplicados', source: 'Fonte' }
+    : { flagship: 'Casos principales', method: 'Método', applied: 'Casos aplicados', source: 'Fuente' };
 ---
 
 <BaseLayout locale={locale} routePath="/" title={title} description={t.hero.statement}>
@@ -41,7 +46,7 @@ const sourceCommits = ['9680660', '40f74e5', '7b5a7e0'];
 
   <section class="work-intro section">
     <div class="container section-heading">
-      <div><p class="eyebrow">01—03 · Flagship cases</p><h2>{t.sections.selected}</h2></div>
+      <div><p class="eyebrow">01—03 · {sectionEyebrows.flagship}</p><h2>{t.sections.selected}</h2></div>
       <p>{t.sections.selectedIntro}</p>
     </div>
   </section>
@@ -52,7 +57,7 @@ const sourceCommits = ['9680660', '40f74e5', '7b5a7e0'];
         <header class="project-showcase-header">
           <span class="project-number">{project.number}</span>
           <span>{project.role}</span>
-          <span class="source-label">Source · {sourceCommits[index]}</span>
+          <span class="source-label">{sectionEyebrows.source} · {sourceCommits[index]}</span>
         </header>
         <div class="project-showcase-grid">
           <figure class="project-visual">
@@ -76,8 +81,8 @@ const sourceCommits = ['9680660', '40f74e5', '7b5a7e0'];
   <section class="section method-section">
     <div class="container">
       <div class="section-heading">
-        <div><p class="eyebrow">Method</p><h2>{t.sections.scope}</h2></div>
-        <p>{t.aboutShort}</p>
+        <div><p class="eyebrow">{sectionEyebrows.method}</p><h2>{t.sections.scope}</h2></div>
+        <p>{t.methodIntro}</p>
       </div>
       <div class="scope-grid">{t.scope.map((item, index) => <div class="scope-item"><span class="project-number">0{index + 1}</span><h3>{item.title}</h3><p>{item.body}</p></div>)}</div>
     </div>
@@ -85,7 +90,7 @@ const sourceCommits = ['9680660', '40f74e5', '7b5a7e0'];
 
   <section class="section">
     <div class="container">
-      <div class="section-heading"><div><p class="eyebrow">04—06 · Applied cases</p><h2>{t.sections.other}</h2></div><a class="text-link" href={localizedPath(locale, '/work')}>{t.sections.allWork} →</a></div>
+      <div class="section-heading"><div><p class="eyebrow">04—06 · {sectionEyebrows.applied}</p><h2>{t.sections.other}</h2></div><a class="text-link" href={localizedPath(locale, '/work')}>{t.sections.allWork} →</a></div>
       <div class="other-grid">
         {otherProjects[locale].map((project, index) => (
           <a class="other-card" href={localizedPath(locale, `/work/${project.slug}`)}>

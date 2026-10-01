@@ -4,8 +4,8 @@ slug: thin-file-credit-decision-engine
 order: 1
 title: Thin-File Credit Decision Engine
 eyebrow: Decision Science
-description: Un caso sintético de política de crédito que conecta features point-in-time, riesgo calibrado, aceptación y valor esperado.
-role: Decision scientist y responsable de la implementación
+description: Un simulador interactivo de política de crédito que combina features point-in-time, riesgo calibrado, aceptación y valor esperado para recomendar aprobar, verificar o rechazar.
+role: Política de crédito · modelos de riesgo · aplicación
 year: 2026
 dataKind: synthetic
 dataLabel: Solicitantes sintéticos
@@ -23,35 +23,37 @@ evidence:
     value: Valor esperado
   - label: Decisiones
     value: Aprobar · verificar · rechazar
-limitations:
-  - Cartera sintética; no representa desempeño crediticio real.
+scope:
+  - Entorno sintético de decisión con supuestos económicos explícitos.
 ---
 
-## La decisión
+## Qué es este proyecto
 
-Una probabilidad no es una decisión de crédito. La pregunta operativa es a quién aprobar, cuánto ofrecer en el primer préstamo y si pedir más evidencia compensa la pérdida de conversión. Las elecciones interactúan: un umbral conservador reduce defaults, pero puede excluir clientes rentables; un límite alto puede convertir a un solicitante aceptable en una decisión de valor negativo.
+Thin-File Credit Decision Engine es un simulador reproducible del recorrido completo de una política de crédito para solicitantes con poco historial de bureau. Convierte los datos disponibles al decidir en estimaciones calibradas de default, fraude y aceptación, y recomienda aprobar, verificar o rechazar junto con un primer límite y valor esperado.
+
+Una probabilidad aislada no es una decisión de crédito. La pregunta operativa es a quién aprobar, cuánto ofrecer y si pedir más evidencia compensa la pérdida de conversión. Las elecciones interactúan: un umbral conservador reduce defaults, pero puede excluir clientes rentables; un límite alto puede convertir a un solicitante aceptable en una decisión de valor negativo.
 
 Construí el proyecto para hacer visible esa capa de política. El resultado no es solamente “riesgo = 12%”, sino una recomendación de aprobar, verificar o rechazar, un monto, el valor esperado y una razón inspeccionable. Toda la cartera es sintética: el caso demuestra metodología y disciplina de ingeniería, no performance real de underwriting.
 
-## Contexto
+## Problema de negocio
 
 Los solicitantes thin-file tienen poco historial tradicional. La ausencia de bureau puede describir a una persona joven y viable, no automáticamente a un mal pagador. Al mismo tiempo, menos información aumenta la incertidumbre y la exposición a fraude o default. Convertir cada missing en cero introduciría una regla silenciosa de rechazo; ignorarlo subestimaría el riesgo.
 
 La demanda también importa. Una oferta de bajo riesgo no crea valor si el cliente probablemente no la acepta. Por eso el motor estima default, fraude y take-up por separado y combina esas probabilidades con ingresos, pérdida y costo de verificación.
 
-## Mi rol
+## Qué construí
 
 Diseñé el proceso generador, la capa de features point-in-time, la validación temporal, los tres modelos y la política. También construí la interfaz Streamlit para revisar cada solicitud, los inputs disponibles en ese momento y la razón de la acción elegida.
 
 El repositorio incluye comandos reproducibles, pruebas automatizadas, artefactos de modelos y política y documentación de los supuestos sintéticos. El foco fue el camino desde evidencia incompleta hasta una recomendación auditable.
 
-## Restricciones
+## Requisitos de diseño
 
 Las variables observadas después de la solicitud no pueden filtrarse al entrenamiento o scoring. La evaluación debe ser posterior al entrenamiento. La falta de bureau tiene que ser explícita y la política debe poder revisarse sin ingeniería inversa de los modelos.
 
-El proyecto no demuestra fairness para grupos protegidos, identidad en producción ni cumplimiento normativo. Son requisitos materiales de un sistema real y se presentan como limitaciones.
+Fairness para grupos protegidos, identidad en producción y cumplimiento normativo quedan fuera de este entorno sintético y no son sugeridos por la interfaz ni por los resultados.
 
-## Enfoque
+## Cómo funciona el motor
 
 El pipeline genera solicitudes, bureau, señales de flujo de caja, documentos y resultados sintéticos. Las features usan únicamente información disponible al timestamp de decisión. Los modelos estiman default, fraude y take-up; la calibración se evalúa porque el valor depende de probabilidades confiables, no solamente del ranking.
 
@@ -59,13 +61,13 @@ Para cada monto candidato, la política combina aceptación, ingresos, pérdida 
 
 > El modelo describe incertidumbre. La política convierte esa incertidumbre en una acción bajo restricciones económicas y de riesgo.
 
-## Decisiones de diseño
+## Decisiones clave
 
 Mantuve fraude y default separados porque permiten intervenciones distintas. La verificación puede reducir fraude sin cambiar el riesgo de pago. Take-up también permanece separado porque describe respuesta, no pérdida.
 
 Elegí validación temporal y no un split aleatorio. El split puede repartir condiciones casi idénticas y exagerar la capacidad de avanzar en el tiempo. El tamaño inicial también se optimiza dentro de la política: una oferta menor puede seguir siendo rentable cuando el monto solicitado no lo es.
 
-## Evidencia
+## Resultados y validación
 
 La aplicación produce métricas reproducibles, diagnósticos de calibración, resúmenes de política y comparación champion/challenger. El simulador muestra default, fraude, take-up, valor esperado, monto recomendado, verificación y reason code.
 
@@ -77,14 +79,14 @@ Una primera formulación trataba el score de default como el producto: elegir un
 
 La corrección fue optimizar acciones, no etiquetas. Cada acción tiene su economía y restricciones. “Verificar” solo aparece cuando el beneficio esperado de información justifica la fricción. Un rechazo puede deberse a valor no positivo sin un score extremo.
 
-## Limitaciones
+## Cómo interpretar los resultados
 
 Todos los solicitantes y outcomes son sintéticos. El proyecto no establece discriminación, rentabilidad o estabilidad reales. No incluye shocks macroeconómicos, adaptación adversarial, cobranzas ni una evaluación completa de fairness. Los parámetros económicos son inputs de escenario.
 
-## Próximo paso
+## Frontera de producción
 
-El siguiente paso sería una evaluación shadow con datos históricos consentidos y gobernados. Definiría monitoreo de aprobación, pérdida, fairness y take-up antes de cambiar una política, comparando champion y challenger en ventanas idénticas e incorporando drift y overrides al criterio de lanzamiento.
+Una implementación real exige evaluación shadow con datos históricos consentidos y gobernados, además de monitoreo de aprobación, pérdida, fairness y take-up definido antes de cualquier cambio de política. Champion y challenger deben compararse en ventanas idénticas, con drift y overrides incluidos en los criterios de lanzamiento.
 
-## Enlaces
+## Explora el proyecto
 
 El repositorio contiene pipeline, pruebas y metodología. La demo revisa una política sintética y no evalúa personas reales.

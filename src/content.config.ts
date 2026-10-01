@@ -27,7 +27,7 @@ const caseStudies = defineCollection({
     imageAlt: z.string().optional(),
     sourceCommit: z.string(),
     evidence: z.array(z.object({ label: z.string(), value: z.string() })).min(2).max(4),
-    limitations: z.array(z.string()).min(1),
+    scope: z.array(z.string()).min(1),
   }),
 });
 

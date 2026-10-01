@@ -14,22 +14,23 @@ const { Content, headings } = await render(entry);
 const data = entry.data;
 const t = copy[locale];
 const labels = locale === 'en'
-  ? { role: 'Role', year: 'Year', data: 'Data', evidence: 'Evidence', contents: 'On this page', limitation: 'Limitation' }
+  ? { role: 'Build scope', year: 'Year', data: 'Data', evidence: 'Evidence', contents: 'On this page', scope: 'Evidence scope', question: 'Decision question', source: 'source commit' }
   : locale === 'pt-br'
-    ? { role: 'Papel', year: 'Ano', data: 'Dados', evidence: 'Evidências', contents: 'Nesta página', limitation: 'Limitação' }
-    : { role: 'Rol', year: 'Año', data: 'Datos', evidence: 'Evidencia', contents: 'En esta página', limitation: 'Limitación' };
+    ? { role: 'Escopo construído', year: 'Ano', data: 'Dados', evidence: 'Evidências', contents: 'Nesta página', scope: 'Escopo da evidência', question: 'Pergunta de decisão', source: 'commit de referência' }
+    : { role: 'Alcance construido', year: 'Año', data: 'Datos', evidence: 'Evidencia', contents: 'En esta página', scope: 'Alcance de la evidencia', question: 'Pregunta de decisión', source: 'commit de referencia' };
 ---
 <BaseLayout locale={locale} routePath={`/work/${slug}`} title={`${data.title} — Joabe Santos`} description={data.description} image={data.socialImage ?? data.image}>
   <header class="case-header container">
     <p class="eyebrow">0{data.order} · {data.eyebrow}</p>
     <h1>{data.title}</h1>
-    <p class="case-question">{data.question}</p>
+    <p class="case-summary">{data.description}</p>
+    <div class="case-question-block"><span>{labels.question}</span><p class="case-question">{data.question}</p></div>
     <dl class="case-meta">
-      <div><dt>{labels.role}</dt><dd>{data.role}</dd></div><div><dt>{labels.year}</dt><dd>{data.year}</dd></div><div><dt>{labels.data}</dt><dd>{data.dataLabel}</dd></div><div><dt>{labels.limitation}</dt><dd>{data.limitations[0]}</dd></div>
+      <div><dt>{labels.role}</dt><dd>{data.role}</dd></div><div><dt>{labels.year}</dt><dd>{data.year}</dd></div><div><dt>{labels.data}</dt><dd>{data.dataLabel}</dd></div><div><dt>{labels.scope}</dt><dd>{data.scope[0]}</dd></div>
     </dl>
   </header>
   <section class="container">
-    <figure class="project-figure case-visual"><ProjectVisual slug={slug} alt={data.imageAlt ?? data.title} eager variant="product" /><figcaption>{data.title} · source commit {data.sourceCommit.slice(0, 7)}</figcaption></figure>
+    <figure class="project-figure case-visual"><ProjectVisual slug={slug} alt={data.imageAlt ?? data.title} eager variant="product" /><figcaption>{data.title} · {labels.source} {data.sourceCommit.slice(0, 7)}</figcaption></figure>
   </section>
   <div class="case-body container">
     <aside class="case-aside">

@@ -5,7 +5,7 @@ order: 6
 title: Hevy Workout ETL
 eyebrow: Data Product
 description: Um produto resiliente da API ao dashboard que protege o histórico de treinos, promove outputs Medallion confiáveis e apresenta progressão em uma aplicação interativa.
-role: Data engineer e analytics builder
+role: Ingestão de API · modelos Medallion · dashboard
 year: 2026
 dataKind: generated
 dataLabel: Snapshot pessoal de treinos versionado
@@ -25,11 +25,11 @@ evidence:
     value: "99 exercícios"
   - label: Testes automatizados
     value: "56"
-limitations:
-  - O dashboard público usa um snapshot versionado e não expõe nem atualiza a partir da chave privada da API.
+scope:
+  - Snapshot pessoal versionado; o app público não exige acesso à API privada.
 ---
 
-## O produto
+## O que é este projeto
 
 O projeto transforma o histórico da API Hevy em um produto analítico durável. É um sistema ETL e também algo concreto para usar: um dashboard Streamlit com quatro abas para frequência, volume, progressão por exercício e consistência estatística.
 
@@ -47,7 +47,7 @@ Bronze preserva o histórico no formato da API. Silver padroniza tipos, valida c
 
 O dashboard consome somente Gold e Analytics. Essa fronteira tira lógica de apresentação da ingestão e permite que os testes validem as mesmas tabelas vistas pelo usuário.
 
-## Evidências
+## Resultados e validação
 
 O snapshot publicado contém 510 treinos de outubro de 2023 a março de 2026 e 4,33 milhões de quilos de volume registrado. A camada analítica avalia o histórico de 99 exercícios; 49 apresentam tendência temporal estatisticamente significativa sob a regra OLS definida.
 
@@ -59,12 +59,12 @@ A progressão é estimada por exercício com mínimos quadrados ordinários ao l
 
 Essas estatísticas descrevem o histórico registrado. Não provam que um programa causou uma mudança nem que toda inclinação significativa seja relevante na prática.
 
-## O que descartei
+## Decisão de design
 
 Descartei um app que consultasse a API a cada abertura. Isso acoplaria a disponibilidade a um terceiro, arriscaria credenciais e faria o resultado mudar sem uma fronteira versionada. Também descartei CSV como contrato porque ele perde tipos importantes entre camadas.
 
 O desenho escolhido torna freshness explícito. Um repositório verde indica código testado e snapshot versionado saudável; não significa ingestão contínua de novos treinos privados.
 
-## Limitações e próximo passo
+## Como interpretar o dashboard
 
-O snapshot representa uma pessoa e não é recomendação de treino. OLS não controla mudanças de programa, lesões ou substituições. Uma versão operacional poderia executar ingestão privada agendada, publicar apenas agregados anônimos e alertar sobre freshness sem expor dados brutos ou credenciais.
+O dashboard descreve um histórico de treino versionado; é um produto analítico, não uma recomendação de treino. OLS não atribui mudanças ao programa e pode refletir lesões ou substituições. A ingestão privada agendada pode atualizar o snapshot enquanto o deploy publica apenas agregados anônimos, mantendo dados brutos e credenciais fora do app público.
