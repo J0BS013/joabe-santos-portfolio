@@ -130,7 +130,7 @@ export const copy: Record<Locale, Copy> = {
     nav: { home: 'Início', work: 'Projetos', about: 'Sobre', resume: 'Currículo' },
     skip: 'Pular para o conteúdo',
     hero: {
-      role: 'Cientista de Decisão e Engenheiro de Analytics',
+      role: 'Decision Scientist & Analytics Engineer',
       statement: 'Construo sistemas de dados confiáveis que realmente apoiam decisões.',
       detail: 'Da definição de métricas e dos pipelines a experimentos, modelos de risco e decisões de negócio.',
       workCta: 'Ver projetos',
@@ -181,7 +181,7 @@ export const copy: Record<Locale, Copy> = {
     nav: { home: 'Inicio', work: 'Proyectos', about: 'Sobre mí', resume: 'Currículum' },
     skip: 'Saltar al contenido',
     hero: {
-      role: 'Científico de Decisiones e Ingeniero de Analítica',
+      role: 'Decision Scientist & Analytics Engineer',
       statement: 'Construyo sistemas de datos confiables que realmente ayudan a tomar decisiones.',
       detail: 'Desde la definición de métricas y los pipelines hasta los experimentos, los modelos de riesgo y las decisiones de negocio.',
       workCta: 'Ver proyectos',
@@ -257,18 +257,18 @@ export const selectedProjects: Record<Locale, Array<{
 
 export const otherProjects: Record<Locale, Array<{ slug: CaseSlug; title: string; body: string; evidence: string }>> = {
   en: [
-    { title: 'Starbucks Promo Effectiveness', body: 'Attributed repeated offers with explicit exposure windows and separated observational evidence from causal claims.', evidence: 'Temporal attribution · ROI framing', slug: 'starbucks-promo-effectiveness-analysis' },
-    { title: 'Retailer RFM Decisioning', body: 'Turned behavioral segments into cost-aware campaign actions and an explicit do-not-target policy.', evidence: '5,878 customers · 68.2% revenue in Champions', slug: 'retailer-segmentation-rfm-clustering' },
-    { title: 'Hevy Workout ETL', body: 'Protected historical workout snapshots from partial API responses and exposed trusted Gold outputs in a live dashboard.', evidence: '56 tests · Live data product', slug: 'hevy-workout-etl-pipeline' },
+    { title: 'Starbucks Promo Effectiveness', body: 'Analyzes 115,609 offer exposures to compare discount, BOGO and informational campaigns, then defines the controlled experiment needed to measure incremental margin.', evidence: 'Temporal attribution · ROI framing', slug: 'starbucks-promo-effectiveness-analysis' },
+    { title: 'Retailer RFM Decisioning', body: 'Segments 5,878 customers by recency, purchase frequency and spend, then assigns campaign actions according to expected net value.', evidence: '5,878 customers · 68.2% revenue in Champions', slug: 'retailer-segmentation-rfm-clustering' },
+    { title: 'Hevy Workout ETL', body: 'Extracts complete workout history from the Hevy API, models it through Bronze, Silver and Gold layers, and serves an interactive progression dashboard.', evidence: '56 tests · Live data product', slug: 'hevy-workout-etl-pipeline' },
   ],
   'pt-br': [
-    { title: 'Efetividade das Promoções Starbucks', body: 'Atribuí ofertas repetidas a janelas de exposição bem definidas e separei associações observadas de conclusões causais.', evidence: 'Atribuição temporal · Análise de retorno', slug: 'starbucks-promo-effectiveness-analysis' },
-    { title: 'Decisões de Campanha com RFM', body: 'Transformei segmentos de clientes em ações de campanha orientadas por custo, incluindo uma regra explícita para não abordar.', evidence: '5.878 clientes · 68,2% da receita em Champions', slug: 'retailer-segmentation-rfm-clustering' },
-    { title: 'ETL de Treinos do Hevy', body: 'Protegi o histórico contra respostas parciais da API e publiquei dados analíticos confiáveis em um painel ao vivo.', evidence: '56 testes · Produto de dados ao vivo', slug: 'hevy-workout-etl-pipeline' },
+    { title: 'Efetividade das Promoções Starbucks', body: 'Analisa 115.609 exposições para comparar campanhas de desconto, BOGO e informativas e definir o experimento necessário para medir margem incremental.', evidence: 'Atribuição temporal · Análise de retorno', slug: 'starbucks-promo-effectiveness-analysis' },
+    { title: 'Decisões de Campanha com RFM', body: 'Segmenta 5.878 clientes por recência, frequência e valor gasto e recomenda ações de campanha de acordo com o retorno líquido esperado.', evidence: '5.878 clientes · 68,2% da receita em Champions', slug: 'retailer-segmentation-rfm-clustering' },
+    { title: 'ETL de Treinos do Hevy', body: 'Extrai o histórico completo da API do Hevy, organiza os dados nas camadas Bronze, Silver e Gold e alimenta um painel interativo de evolução dos treinos.', evidence: '56 testes · Produto de dados ao vivo', slug: 'hevy-workout-etl-pipeline' },
   ],
   es: [
-    { title: 'Efectividad de las Promociones de Starbucks', body: 'Atribuí ofertas repetidas a ventanas de exposición bien definidas y separé asociaciones observadas de conclusiones causales.', evidence: 'Atribución temporal · Análisis de retorno', slug: 'starbucks-promo-effectiveness-analysis' },
-    { title: 'Decisiones de Campaña con RFM', body: 'Convertí segmentos de clientes en acciones de campaña basadas en costos, incluida una regla explícita para no contactar.', evidence: '5.878 clientes · 68,2% de ingresos en Champions', slug: 'retailer-segmentation-rfm-clustering' },
-    { title: 'ETL de Entrenamientos de Hevy', body: 'Protegí el historial frente a respuestas parciales de la API y publiqué datos analíticos confiables en un panel en vivo.', evidence: '56 pruebas · Producto de datos en vivo', slug: 'hevy-workout-etl-pipeline' },
+    { title: 'Efectividad de las Promociones de Starbucks', body: 'Analiza 115.609 exposiciones para comparar campañas de descuento, BOGO e informativas y definir el experimento necesario para medir el margen incremental.', evidence: 'Atribución temporal · Análisis de retorno', slug: 'starbucks-promo-effectiveness-analysis' },
+    { title: 'Decisiones de Campaña con RFM', body: 'Segmenta 5.878 clientes por recencia, frecuencia y gasto, y recomienda acciones de campaña según el valor neto esperado.', evidence: '5.878 clientes · 68,2% de ingresos en Champions', slug: 'retailer-segmentation-rfm-clustering' },
+    { title: 'ETL de Entrenamientos de Hevy', body: 'Extrae el historial completo de la API de Hevy, organiza los datos en capas Bronze, Silver y Gold y alimenta un panel interactivo de evolución del entrenamiento.', evidence: '56 pruebas · Producto de datos en vivo', slug: 'hevy-workout-etl-pipeline' },
   ],
 };

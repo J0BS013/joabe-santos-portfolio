@@ -10,18 +10,17 @@ const { locale } = Astro.props;
 const t = copy[locale];
 const projects = selectedProjects[locale];
 const localeName = locale === 'en' ? 'English' : locale === 'pt-br' ? 'Português' : 'Español';
-const title = locale === 'en' ? 'Joabe Santos — Decision Scientist & Analytics Engineer' : locale === 'pt-br' ? 'Joabe Santos — Decision Scientist e Analytics Engineer' : 'Joabe Santos — Decision Scientist y Analytics Engineer';
+const title = 'Joabe Santos — Decision Scientist & Analytics Engineer';
 const heroLabels = locale === 'en'
   ? ['Decision systems', 'Trusted metrics', 'Applied statistics']
   : locale === 'pt-br'
     ? ['Sistemas de decisão', 'Métricas confiáveis', 'Estatística aplicada']
     : ['Sistemas de decisión', 'Métricas confiables', 'Estadística aplicada'];
-const sourceCommits = ['9680660', '40f74e5', '7b5a7e0'];
 const sectionEyebrows = locale === 'en'
-  ? { flagship: 'Flagship cases', method: 'Method', applied: 'Applied cases', source: 'Source' }
+  ? { flagship: 'Flagship cases', method: 'Method', applied: 'Applied cases' }
   : locale === 'pt-br'
-    ? { flagship: 'Cases principais', method: 'Método', applied: 'Cases aplicados', source: 'Fonte' }
-    : { flagship: 'Casos principales', method: 'Método', applied: 'Casos aplicados', source: 'Fuente' };
+    ? { flagship: 'Cases principais', method: 'Método', applied: 'Cases aplicados' }
+    : { flagship: 'Casos principales', method: 'Método', applied: 'Casos aplicados' };
 ---
 
 <BaseLayout locale={locale} routePath="/" title={title} description={t.hero.statement}>
@@ -57,7 +56,6 @@ const sectionEyebrows = locale === 'en'
         <header class="project-showcase-header">
           <span class="project-number">{project.number}</span>
           <span>{project.role}</span>
-          <span class="source-label">{sectionEyebrows.source} · {sourceCommits[index]}</span>
         </header>
         <div class="project-showcase-grid">
           <figure class="project-visual">

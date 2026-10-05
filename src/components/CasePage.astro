@@ -14,10 +14,10 @@ const { Content, headings } = await render(entry);
 const data = entry.data;
 const t = copy[locale];
 const labels = locale === 'en'
-  ? { role: 'What was built', year: 'Year', data: 'Data', evidence: 'Evidence', contents: 'On this page', scope: 'Evidence scope', question: 'Decision question', source: 'source commit' }
+  ? { role: 'What was built', year: 'Year', data: 'Data', evidence: 'Evidence', contents: 'On this page', scope: 'Evidence scope', question: 'Decision question' }
   : locale === 'pt-br'
-    ? { role: 'O que foi construído', year: 'Ano', data: 'Dados', evidence: 'Evidências', contents: 'Nesta página', scope: 'Escopo da evidência', question: 'Pergunta de decisão', source: 'commit de referência' }
-    : { role: 'Qué se construyó', year: 'Año', data: 'Datos', evidence: 'Evidencia', contents: 'En esta página', scope: 'Alcance de la evidencia', question: 'Pregunta de decisión', source: 'commit de referencia' };
+    ? { role: 'O que foi construído', year: 'Ano', data: 'Dados', evidence: 'Evidências', contents: 'Nesta página', scope: 'Escopo da evidência', question: 'Pergunta de decisão' }
+    : { role: 'Qué se construyó', year: 'Año', data: 'Datos', evidence: 'Evidencia', contents: 'En esta página', scope: 'Alcance de la evidencia', question: 'Pregunta de decisión' };
 ---
 <BaseLayout locale={locale} routePath={`/work/${slug}`} title={`${data.title} — Joabe Santos`} description={data.description} image={data.socialImage ?? data.image}>
   <header class="case-header container">
@@ -30,7 +30,7 @@ const labels = locale === 'en'
     </dl>
   </header>
   <section class="container">
-    <figure class="project-figure case-visual"><ProjectVisual slug={slug} alt={data.imageAlt ?? data.title} locale={locale} eager variant="product" /><figcaption>{data.title} · {labels.source} {data.sourceCommit.slice(0, 7)}</figcaption></figure>
+    <figure class="project-figure case-visual"><ProjectVisual slug={slug} alt={data.imageAlt ?? data.title} locale={locale} eager variant="product" /></figure>
   </section>
   <div class="case-body container">
     <aside class="case-aside">
