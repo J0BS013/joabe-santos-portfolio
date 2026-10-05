@@ -5,11 +5,14 @@ from reportlab.lib.enums import TA_CENTER
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.lib.units import inch
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import (
     BaseDocTemplate,
     Frame,
     HRFlowable,
     KeepTogether,
+    PageBreak,
     PageTemplate,
     Paragraph,
     Spacer,
@@ -23,6 +26,18 @@ BLUE = colors.HexColor("#1F4E79")
 TEXT = colors.HexColor("#111111")
 MUTED = colors.HexColor("#444444")
 
+pdfmetrics.registerFont(TTFont("Arial", "C:/Windows/Fonts/arial.ttf"))
+pdfmetrics.registerFont(TTFont("Arial-Bold", "C:/Windows/Fonts/arialbd.ttf"))
+pdfmetrics.registerFont(TTFont("Arial-Italic", "C:/Windows/Fonts/ariali.ttf"))
+pdfmetrics.registerFont(TTFont("Arial-BoldItalic", "C:/Windows/Fonts/arialbi.ttf"))
+pdfmetrics.registerFontFamily(
+    "Arial",
+    normal="Arial",
+    bold="Arial-Bold",
+    italic="Arial-Italic",
+    boldItalic="Arial-BoldItalic",
+)
+
 
 def link(label: str, url: str) -> str:
     return f'<link href="{url}" color="#0563C1"><u>{label}</u></link>'
@@ -30,40 +45,40 @@ def link(label: str, url: str) -> str:
 
 styles = getSampleStyleSheet()
 styles.add(ParagraphStyle(
-    name="ResumeName", parent=styles["Title"], fontName="Helvetica-Bold",
+    name="ResumeName", parent=styles["Title"], fontName="Arial-Bold",
     fontSize=17, leading=20, textColor=BLUE, alignment=TA_CENTER, spaceAfter=5,
 ))
 styles.add(ParagraphStyle(
-    name="ResumeTagline", parent=styles["Normal"], fontName="Helvetica",
+    name="ResumeTagline", parent=styles["Normal"], fontName="Arial",
     fontSize=10.5, leading=13, textColor=MUTED, alignment=TA_CENTER, spaceAfter=4,
 ))
 styles.add(ParagraphStyle(
-    name="ResumeContact", parent=styles["Normal"], fontName="Helvetica",
-    fontSize=9.5, leading=12, textColor=TEXT, alignment=TA_CENTER, spaceAfter=9,
+    name="ResumeContact", parent=styles["Normal"], fontName="Arial",
+    fontSize=9.25, leading=11.5, textColor=TEXT, alignment=TA_CENTER, spaceAfter=2,
 ))
 styles.add(ParagraphStyle(
-    name="Section", parent=styles["Heading2"], fontName="Helvetica-Bold",
+    name="Section", parent=styles["Heading2"], fontName="Arial-Bold",
     fontSize=11.5, leading=14, textColor=BLUE, spaceBefore=7, spaceAfter=2,
 ))
 styles.add(ParagraphStyle(
-    name="Body", parent=styles["BodyText"], fontName="Helvetica",
+    name="Body", parent=styles["BodyText"], fontName="Arial",
     fontSize=9.45, leading=12.2, textColor=TEXT, spaceAfter=4,
 ))
 styles.add(ParagraphStyle(
-    name="BulletResume", parent=styles["BodyText"], fontName="Helvetica",
+    name="BulletResume", parent=styles["BodyText"], fontName="Arial",
     fontSize=9.25, leading=11.7, textColor=TEXT, leftIndent=17, firstLineIndent=-9,
     bulletIndent=5, spaceAfter=2.5,
 ))
 styles.add(ParagraphStyle(
-    name="Role", parent=styles["BodyText"], fontName="Helvetica",
+    name="Role", parent=styles["BodyText"], fontName="Arial",
     fontSize=9.55, leading=12, textColor=TEXT,
 ))
 styles.add(ParagraphStyle(
-    name="Date", parent=styles["BodyText"], fontName="Helvetica-Oblique",
+    name="Date", parent=styles["BodyText"], fontName="Arial-Italic",
     fontSize=8.6, leading=11, textColor=TEXT, alignment=2,
 ))
 styles.add(ParagraphStyle(
-    name="Education", parent=styles["BodyText"], fontName="Helvetica",
+    name="Education", parent=styles["BodyText"], fontName="Arial",
     fontSize=9.35, leading=11.8, textColor=TEXT, spaceAfter=4,
 ))
 
@@ -97,7 +112,7 @@ def role(title: str, company: str, dates: str):
 
 def footer(canvas, doc):
     canvas.saveState()
-    canvas.setFont("Helvetica", 7.5)
+    canvas.setFont("Arial", 7.5)
     canvas.setFillColor(colors.HexColor("#666666"))
     canvas.drawCentredString(letter[0] / 2, 0.28 * inch, f"Joabe Santos | Page {doc.page}")
     canvas.restoreState()
@@ -117,16 +132,21 @@ def build():
     doc.addPageTemplates([PageTemplate(id="resume", frames=[frame], onPage=footer)])
 
     story = [
-        Paragraph("JOABE BENCAO ROCHA SANTOS", styles["ResumeName"]),
+        Paragraph("JOABE BÊNÇÃO ROCHA SANTOS", styles["ResumeName"]),
         Paragraph("Decision Scientist | Analytics Engineering", styles["ResumeTagline"]),
         Paragraph(
-            "Sao Paulo, Brazil &nbsp; | &nbsp; "
+            "São Paulo, Brazil &nbsp; | &nbsp; "
             + link("jbencao37@gmail.com", "mailto:jbencao37@gmail.com")
-            + " &nbsp; | &nbsp; " + link("LinkedIn", "https://www.linkedin.com/in/joabe-santos")
-            + " &nbsp; | &nbsp; " + link("GitHub", "https://github.com/J0BS013")
             + " &nbsp; | &nbsp; US Visa: B1/B2 (Valid)",
             styles["ResumeContact"],
         ),
+        Paragraph(
+            link("LinkedIn", "https://www.linkedin.com/in/joabe-santos")
+            + " &nbsp; | &nbsp; " + link("Portfolio", "https://j0bs013.github.io/joabe-santos-portfolio/")
+            + " &nbsp; | &nbsp; " + link("GitHub", "https://github.com/J0BS013"),
+            styles["ResumeContact"],
+        ),
+        Spacer(1, 5),
     ]
 
     story += section("PROFESSIONAL SUMMARY")
@@ -179,6 +199,8 @@ def build():
         "Conducted code reviews and supported junior analysts with SQL, dbt modeling and dashboard standards.",
     ])
 
+    story += [PageBreak()]
+    story += section("PROFESSIONAL EXPERIENCE - CONTINUED")
     story += [role(
         "Junior Data Analyst",
         "AB InBev - AMBEV / BEES Global",
@@ -218,7 +240,7 @@ def build():
     story += section("EDUCATION")
     story += [
         Paragraph("<b>Specialization in Applied Statistics</b> | Ampli | 2022 - 2023", styles["Education"]),
-        Paragraph("<b>B.S. in Systems Analysis and Development</b> | FATEC Sao Paulo | 2019 - 2021", styles["Education"]),
+        Paragraph("<b>B.S. in Systems Analysis and Development</b> | FATEC São Paulo | 2019 - 2021", styles["Education"]),
         Paragraph("<b>Technical Degree in Informatics</b> | ETEC | 2016 - 2017", styles["Education"]),
     ]
 

@@ -13,7 +13,7 @@ const publicVersionNote = locale === 'en'
     : 'Preparada para distribución pública, manteniendo la trayectoria profesional, la formación y los enlaces de contacto, sin teléfono ni identificación confidencial del cliente.';
 ---
 <BaseLayout locale={locale} routePath="/resume" title={`${t.resumeTitle} — Joabe Santos`} description={t.resumeBody}>
-  <main class="resume-page">
+  <section class="resume-page">
     <div class="container resume-shell">
       <div class="resume-main">
         <p class="eyebrow">PDF · 2 pages</p>
@@ -30,5 +30,5 @@ const publicVersionNote = locale === 'en'
         <p>{publicVersionNote}</p>
       </aside>
     </div>
-  </main>
+  </section>
 </BaseLayout>

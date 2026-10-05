@@ -79,7 +79,7 @@ export const copy: Record<Locale, Copy> = {
     nav: { home: 'Home', work: 'Work', about: 'About', resume: 'Résumé' },
     skip: 'Skip to content',
     hero: {
-      role: 'Decision Scientist and Analytics Engineer',
+      role: 'Decision Scientist & Analytics Engineer',
       statement: 'I build data systems that people trust — and that actually get used.',
       detail: 'From metric definitions and reliable pipelines to experiments, risk models and business decisions.',
       workCta: 'View selected work',
@@ -124,7 +124,7 @@ export const copy: Record<Locale, Copy> = {
     resumeTitle: 'Résumé',
     resumeBody: 'Experience building decision systems, analytical models and reliable data products across insurance, marketplace analytics and business intelligence.',
     resumeDownload: 'Download PDF résumé',
-    updated: 'Updated September 2026',
+    updated: 'Updated October 2026',
   },
   'pt-br': {
     nav: { home: 'Início', work: 'Projetos', about: 'Sobre', resume: 'Currículo' },
@@ -164,7 +164,7 @@ export const copy: Record<Locale, Copy> = {
     principlesTitle: 'Princípios de trabalho',
     principles: [
       'Começar pela decisão e pelo custo do erro.',
-      'Validar grão, métrica e reconciliação antes de otimizar.',
+      'Validar o nível de detalhe, a definição da métrica e a reconciliação antes de otimizar.',
       'Separar evidência observada, cenários sintéticos e alegações causais.',
       'Manter premissas e alcance da evidência junto da métrica que elas qualificam.',
     ],
@@ -175,7 +175,7 @@ export const copy: Record<Locale, Copy> = {
     resumeTitle: 'Currículo',
     resumeBody: 'Experiência construindo sistemas de decisão, modelos analíticos e produtos de dados confiáveis em seguros, marketplace e business intelligence.',
     resumeDownload: 'Baixar currículo em PDF',
-    updated: 'Atualizado em setembro de 2026',
+    updated: 'Atualizado em outubro de 2026',
   },
   es: {
     nav: { home: 'Inicio', work: 'Proyectos', about: 'Sobre mí', resume: 'Currículum' },
@@ -215,7 +215,7 @@ export const copy: Record<Locale, Copy> = {
     principlesTitle: 'Principios de trabajo',
     principles: [
       'Comenzar por la decisión y el costo del error.',
-      'Validar grano, métrica y reconciliación antes de optimizar.',
+      'Validar el nivel de detalle, la definición de la métrica y la conciliación antes de optimizar.',
       'Separar evidencia observada, escenarios sintéticos y afirmaciones causales.',
       'Mantener los supuestos y el alcance de la evidencia junto a la métrica que califican.',
     ],
@@ -226,7 +226,7 @@ export const copy: Record<Locale, Copy> = {
     resumeTitle: 'Currículum',
     resumeBody: 'Experiencia construyendo sistemas de decisión, modelos analíticos y productos de datos confiables en seguros, marketplaces y business intelligence.',
     resumeDownload: 'Descargar currículum en PDF',
-    updated: 'Actualizado en septiembre de 2026',
+    updated: 'Actualizado en octubre de 2026',
   },
 };
 

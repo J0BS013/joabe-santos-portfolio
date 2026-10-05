@@ -3,9 +3,10 @@ import { localeLabels, locales, localizedPath, type Locale } from '../lib/i18n';
 
 interface Props { locale: Locale; routePath: string; }
 const { locale, routePath } = Astro.props;
+const navigationLabel = locale === 'en' ? 'Language' : locale === 'pt-br' ? 'Idioma' : 'Idioma';
 ---
 
-<nav class="language-switcher" aria-label="Language">
+<nav class="language-switcher" aria-label={navigationLabel}>
   {locales.map((item) => (
     <a
       href={localizedPath(item, routePath)}

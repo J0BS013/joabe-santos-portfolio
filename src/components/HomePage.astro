@@ -16,6 +16,7 @@ const heroLabels = locale === 'en'
   : locale === 'pt-br'
     ? ['Sistemas de decisão', 'Métricas confiáveis', 'Estatística aplicada']
     : ['Sistemas de decisión', 'Métricas confiables', 'Estadística aplicada'];
+const capabilitiesLabel = locale === 'en' ? 'Core capabilities' : locale === 'pt-br' ? 'Principais competências' : 'Competencias principales';
 const sectionEyebrows = locale === 'en'
   ? { flagship: 'Flagship cases', method: 'Method', applied: 'Applied cases' }
   : locale === 'pt-br'
@@ -35,7 +36,7 @@ const sectionEyebrows = locale === 'en'
           <a class="button" href={localizedPath(locale, '/work')}>{t.hero.workCta} <span aria-hidden="true">↘</span></a>
           <a class="text-link" href={withBase('/resume/joabe-santos-resume.pdf')} download>{t.hero.resumeCta} ↓</a>
         </div>
-        <ul class="hero-capabilities" aria-label="Core capabilities">
+        <ul class="hero-capabilities" aria-label={capabilitiesLabel}>
           {heroLabels.map((label) => <li>{label}</li>)}
         </ul>
       </div>

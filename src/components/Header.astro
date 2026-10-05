@@ -5,6 +5,7 @@ import { localizedPath, type Locale } from '../lib/i18n';
 interface Props { locale: Locale; routePath: string; }
 const { locale, routePath } = Astro.props;
 const t = copy[locale];
+const navigationLabel = locale === 'en' ? 'Primary navigation' : locale === 'pt-br' ? 'Navegação principal' : 'Navegación principal';
 const navItems = [
   { label: t.nav.home, route: '/' },
   { label: t.nav.work, route: '/work' },
@@ -15,7 +16,7 @@ const navItems = [
 <header>
   <div class="header-inner container">
     <a class="brand" href={localizedPath(locale, '/')}><span class="brand-mark" aria-hidden="true">JS</span><span>Joabe Santos</span></a>
-    <nav class="primary-nav" aria-label="Primary navigation">{navItems.map((item) => <a href={localizedPath(locale, item.route)} aria-current={routePath === item.route ? 'page' : undefined}>{item.label}</a>)}</nav>
+    <nav class="primary-nav" aria-label={navigationLabel}>{navItems.map((item) => <a href={localizedPath(locale, item.route)} aria-current={routePath === item.route ? 'page' : undefined}>{item.label}</a>)}</nav>
     <LanguageSwitcher locale={locale} routePath={routePath} />
   </div>
 </header>
