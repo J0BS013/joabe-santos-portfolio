@@ -2,10 +2,10 @@
 locale: es
 slug: retailer-segmentation-rfm-clustering
 order: 5
-title: Retailer RFM Decisioning
-eyebrow: Customer Analytics
-description: Un pipeline reproducible de segmentación que convierte comportamiento RFM en acciones de campaña sensibles al costo, validadas con clustering y expuestas mediante outputs analíticos confiables.
-role: Segmentación · política de campaña · pipeline
+title: Decisiones de Campaña con RFM
+eyebrow: Análisis de Clientes
+description: Un proceso reproducible de segmentación que convierte el comportamiento RFM en acciones de campaña sensibles al costo, validadas con agrupamiento y publicadas como resultados analíticos confiables.
+role: Segmentación · política de campaña · proceso analítico
 year: 2026
 dataKind: public
 dataLabel: UCI Online Retail II
@@ -30,17 +30,17 @@ scope:
 
 ## Qué es este proyecto
 
-Retailer RFM Decisioning es un pipeline reproducible de customer analytics construido sobre 1,04 millones de transacciones públicas. Crea segmentos RFM interpretables, compara su estructura con k-means y asigna una acción de campaña —o `do_not_target`— mediante supuestos explícitos de respuesta, margen y costo de contacto.
+Decisiones de Campaña con RFM es un proceso reproducible de análisis de clientes construido sobre 1,04 millones de transacciones públicas. Crea segmentos RFM interpretables, compara su estructura con k-means y asigna una acción de campaña —o la decisión de no contactar— mediante supuestos explícitos de respuesta, margen y costo de contacto.
 
 La segmentación solo importa cuando cambia una acción. La pregunta práctica es qué clientes deben recibir inversión de retención, lealtad o reactivación y cuáles no deben recibir contacto pagado porque el valor esperado no justifica el costo.
 
-El output combina una política RFM interpretable con una capa de decisión de campaña. Cada cliente recibe un segmento, una acción recomendada o `do_not_target` y un valor neto esperado bajo supuestos visibles.
+El resultado combina una política RFM interpretable con una capa de decisión de campaña. Cada cliente recibe un segmento, una acción recomendada o la decisión de no contactar, y un valor neto esperado bajo supuestos visibles.
 
 ## De transacciones a comportamiento
 
-El dataset público Online Retail II contiene 1.041.670 transacciones entre diciembre de 2009 y diciembre de 2011. El pipeline limpia la semántica transaccional, resuelve clientes identificados y produce Recency, Frequency y Monetary para 5.878 clientes.
+Los datos públicos de Online Retail II contienen 1.041.670 transacciones entre diciembre de 2009 y diciembre de 2011. El proceso depura la semántica transaccional, identifica clientes y calcula Recencia, Frecuencia y Valor Monetario para 5.878 clientes.
 
-Los quintiles RFM crean segmentos deterministas y explicables. K-means sobre features transformadas funciona como validación, no como sustituto opaco. Cinco clusters produjeron un pico local de silhouette de 0,61 y apoyaron la estructura de comportamiento.
+Los quintiles RFM crean segmentos deterministas y explicables. K-means sobre variables transformadas funciona como validación, no como sustituto opaco. Cinco grupos produjeron un máximo local del coeficiente silhouette de 0,61 y respaldaron la estructura de comportamiento.
 
 ## Hallazgos
 
@@ -52,20 +52,20 @@ Esa concentración hace ineficientes las campañas indiscriminadas. La inactivid
 
 ## Capa de decisión de campaña
 
-La política combina respuesta base, conversión incremental, margen, costo de contacto e incentivo. Son supuestos explícitos de escenario, no conclusiones inferidas del dataset. El cliente se contacta solo si la acción tiene valor neto esperado positivo; de lo contrario, el output es `do_not_target`.
+La política combina respuesta base, conversión incremental, margen, costo de contacto e incentivo. Son supuestos explícitos del escenario, no conclusiones inferidas de los datos. El cliente se contacta solo si la acción tiene un valor neto esperado positivo; de lo contrario, la decisión es no contactar.
 
-Así, el trade-off económico es revisable. Los supuestos pueden cambiar y las decisiones afectadas quedan visibles sin ocultar la lógica dentro de una etiqueta de cluster.
+Así, el equilibrio entre costo y beneficio puede revisarse. Los supuestos pueden cambiar y las decisiones afectadas quedan visibles, sin ocultar la lógica dentro de una etiqueta de grupo.
 
 ## Lo que descarté
 
-Descarté usar etiquetas de k-means como respuesta final. Los números de cluster no tienen significado estable ni explican una intervención. La política RFM determinista sigue siendo operacional por ser auditable; clustering verifica si la estructura es plausible.
+Descarté usar las etiquetas de k-means como respuesta final. Los números de los grupos no tienen un significado estable ni explican una intervención. La política RFM determinista sigue siendo operativa porque puede auditarse; el agrupamiento verifica si la estructura es plausible.
 
 También descarté contactar a todo cliente Lost. Su volumen parece atractivo, pero la baja frecuencia y pequeña participación en ingresos dificultan justificar un win-back amplio. Solo la porción de mayor valor debe pasar la regla económica positiva.
 
 ## Validación y reproducibilidad
 
-Pandera valida contratos, Parquet conserva outputs tipados y DuckDB permite inspección analítica. Pruebas, Docker y CI hacen reproducible el pipeline. Un artefacto versionado de métricas conecta las afirmaciones del README y del portafolio con los resultados generados.
+Pandera valida contratos, Parquet conserva resultados con tipos definidos y DuckDB permite la inspección analítica. Las pruebas, Docker y la integración continua hacen reproducible el proceso. Un archivo versionado de métricas conecta las afirmaciones del README y del portafolio con los resultados generados.
 
 ## Qué significa la recomendación
 
-RFM describe el comportamiento pasado y la política evalúa escenarios transparentes; ninguno se presenta como respuesta incremental o lifetime value medido. El diseño recomendado para activación utiliza holdout estratificado por segmento y mide margen de contribución incremental, con presión de contacto y opt-out como guardrails.
+RFM describe el comportamiento pasado y la política evalúa escenarios transparentes; ninguno se presenta como respuesta incremental ni como valor de vida del cliente medido. El diseño recomendado para activación utiliza un grupo de control estratificado por segmento y mide el margen de contribución incremental, con frecuencia de contacto y bajas como límites de seguridad.

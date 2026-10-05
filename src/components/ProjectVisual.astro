@@ -1,9 +1,27 @@
 ---
 import type { CaseSlug } from '../data/site';
-import { withBase } from '../lib/i18n';
+import { withBase, type Locale } from '../lib/i18n';
 
-interface Props { slug: CaseSlug; alt: string; eager?: boolean; variant?: 'data' | 'product'; }
-const { slug, alt, eager = false, variant = 'data' } = Astro.props;
+interface Props { slug: CaseSlug; alt: string; locale?: Locale; eager?: boolean; variant?: 'data' | 'product'; }
+const { slug, alt, locale = 'en', eager = false, variant = 'data' } = Astro.props;
+const visualCopy = {
+  en: {
+    creditLabel: 'EXPECTED VALUE POLICY', creditTitle: 'Decisions, not just scores.', lowRisk: 'LOW RISK', highRisk: 'HIGH RISK', policyOutput: 'POLICY OUTPUT', approve: 'Approve', verify: 'Verify', decline: 'Decline',
+    subscriptionLabel: 'SUBSCRIPTION ANALYTICS', subscriptionTitle: 'Revenue that reconciles.', endingMrr: 'ENDING MRR', movements: 'MRR MOVEMENTS', movementList: 'new · expansion · churn', retention: 'COHORT RETENTION',
+    lakehouseLabel: 'MARKETPLACE EVENT LAKEHOUSE', lakehouseTitle: 'Events become evidence.', bronzeEvents: 'immutable events', eventTime: 'event time', ingestionTime: 'ingestion time', silverEvents: 'validated events', duplicates: 'duplicates', quarantined: 'quarantined', late: 'late arrivals', sessions: 'sessions', orders: 'orders', quality: 'QUALITY CONTRACT', qualityList: 'deduplication · quarantine · sequence-aware funnel · revenue reconciliation',
+  },
+  'pt-br': {
+    creditLabel: 'POLÍTICA DE VALOR ESPERADO', creditTitle: 'Decisões, não apenas pontuações.', lowRisk: 'BAIXO RISCO', highRisk: 'ALTO RISCO', policyOutput: 'RESULTADO DA POLÍTICA', approve: 'Aprovar', verify: 'Verificar', decline: 'Recusar',
+    subscriptionLabel: 'ANÁLISE DE ASSINATURAS', subscriptionTitle: 'Receita que reconcilia.', endingMrr: 'MRR FINAL', movements: 'MOVIMENTOS DE MRR', movementList: 'nova · expansão · cancelamento', retention: 'RETENÇÃO POR COORTE',
+    lakehouseLabel: 'LAKEHOUSE DE EVENTOS', lakehouseTitle: 'Eventos viram evidência.', bronzeEvents: 'eventos imutáveis', eventTime: 'hora do evento', ingestionTime: 'hora da ingestão', silverEvents: 'eventos validados', duplicates: 'duplicados', quarantined: 'em quarentena', late: 'eventos atrasados', sessions: 'sessões', orders: 'pedidos', quality: 'CONTRATO DE QUALIDADE', qualityList: 'deduplicação · quarentena · funil sequencial · reconciliação de receita',
+  },
+  es: {
+    creditLabel: 'POLÍTICA DE VALOR ESPERADO', creditTitle: 'Decisiones, no solo puntuaciones.', lowRisk: 'RIESGO BAJO', highRisk: 'RIESGO ALTO', policyOutput: 'RESULTADO DE LA POLÍTICA', approve: 'Aprobar', verify: 'Verificar', decline: 'Rechazar',
+    subscriptionLabel: 'ANALÍTICA DE SUSCRIPCIONES', subscriptionTitle: 'Ingresos que concilian.', endingMrr: 'MRR FINAL', movements: 'MOVIMIENTOS DE MRR', movementList: 'alta · expansión · cancelación', retention: 'RETENCIÓN POR COHORTE',
+    lakehouseLabel: 'LAKEHOUSE DE EVENTOS', lakehouseTitle: 'Los eventos se convierten en evidencia.', bronzeEvents: 'eventos inmutables', eventTime: 'hora del evento', ingestionTime: 'hora de ingesta', silverEvents: 'eventos validados', duplicates: 'duplicados', quarantined: 'en cuarentena', late: 'eventos tardíos', sessions: 'sesiones', orders: 'pedidos', quality: 'CONTRATO DE CALIDAD', qualityList: 'deduplicación · cuarentena · embudo secuencial · conciliación de ingresos',
+  },
+} as const;
+const v = visualCopy[locale];
 const images: Partial<Record<CaseSlug, { src: string; width: number; height: number }>> = {
   'thin-file-credit-decision-engine': { src: '/images/projects/thin-file-credit-decision-engine.png', width: 1440, height: 1100 },
   'subscription-analytics-dbt': { src: '/images/projects/subscription-analytics-dbt.png', width: 1440, height: 1100 },
@@ -24,8 +42,8 @@ const descId = `desc-${slug}-${variant}`;
     <desc id={descId}>Synthetic applicants plotted by expected value and default risk, separated into approve, verify and decline policy regions.</desc>
     <rect width="920" height="580" rx="26" fill="#dcefe3" />
     <g transform="translate(72 62)">
-      <text x="0" y="0" font-family="Arial,sans-serif" font-size="13" font-weight="700" letter-spacing="2" fill="#315c49">EXPECTED VALUE POLICY</text>
-      <text x="0" y="45" font-family="Arial,sans-serif" font-size="32" font-weight="700" fill="#142c23">Decisions, not just scores.</text>
+      <text x="0" y="0" font-family="Arial,sans-serif" font-size="13" font-weight="700" letter-spacing="2" fill="#315c49">{v.creditLabel}</text>
+      <text x="0" y="45" font-family="Arial,sans-serif" font-size="32" font-weight="700" fill="#142c23">{v.creditTitle}</text>
       <g transform="translate(0 92)">
         <path d="M0 350H570M0 0V350" stroke="#527565" stroke-width="1.5" opacity=".55"/>
         <g stroke="#527565" opacity=".2"><path d="M0 70h570M0 140h570M0 210h570M0 280h570"/><path d="M114 0v350M228 0v350M342 0v350M456 0v350"/></g>
@@ -33,16 +51,16 @@ const descId = `desc-${slug}-${variant}`;
         <path d="M0 350L0 264C105 248 192 204 277 161S414 76 570 18V350Z" fill="#9bd3b5" opacity=".45"/>
         <g fill="#f36b45"><circle cx="72" cy="78" r="9"/><circle cx="134" cy="112" r="7"/><circle cx="192" cy="156" r="10"/><circle cx="266" cy="135" r="6"/><circle cx="349" cy="204" r="9"/><circle cx="434" cy="175" r="7"/><circle cx="516" cy="234" r="10"/></g>
         <g fill="#176b4a"><circle cx="92" cy="294" r="8"/><circle cx="151" cy="265" r="6"/><circle cx="223" cy="244" r="9"/><circle cx="308" cy="226" r="7"/><circle cx="391" cy="188" r="8"/><circle cx="482" cy="156" r="6"/></g>
-        <text x="8" y="374" font-family="Arial,sans-serif" font-size="12" fill="#315c49">LOW RISK</text>
-        <text x="493" y="374" font-family="Arial,sans-serif" font-size="12" fill="#315c49">HIGH RISK</text>
+        <text x="8" y="374" font-family="Arial,sans-serif" font-size="12" fill="#315c49">{v.lowRisk}</text>
+        <text x="493" y="374" font-family="Arial,sans-serif" font-size="12" fill="#315c49">{v.highRisk}</text>
       </g>
       <g transform="translate(640 105)">
-        <text font-family="Arial,sans-serif" font-size="12" font-weight="700" fill="#315c49">POLICY OUTPUT</text>
-        <text y="55" font-family="Arial,sans-serif" font-size="15" fill="#315c49">Approve</text><text x="0" y="89" font-family="Arial,sans-serif" font-size="34" font-weight="700" fill="#142c23">42%</text>
+        <text font-family="Arial,sans-serif" font-size="12" font-weight="700" fill="#315c49">{v.policyOutput}</text>
+        <text y="55" font-family="Arial,sans-serif" font-size="15" fill="#315c49">{v.approve}</text><text x="0" y="89" font-family="Arial,sans-serif" font-size="34" font-weight="700" fill="#142c23">42%</text>
         <path d="M0 112h150" stroke="#a8c9ba"/>
-        <text y="148" font-family="Arial,sans-serif" font-size="15" fill="#315c49">Verify</text><text x="0" y="182" font-family="Arial,sans-serif" font-size="34" font-weight="700" fill="#f36b45">31%</text>
+        <text y="148" font-family="Arial,sans-serif" font-size="15" fill="#315c49">{v.verify}</text><text x="0" y="182" font-family="Arial,sans-serif" font-size="34" font-weight="700" fill="#f36b45">31%</text>
         <path d="M0 205h150" stroke="#a8c9ba"/>
-        <text y="241" font-family="Arial,sans-serif" font-size="15" fill="#315c49">Decline</text><text x="0" y="275" font-family="Arial,sans-serif" font-size="34" font-weight="700" fill="#142c23">27%</text>
+        <text y="241" font-family="Arial,sans-serif" font-size="15" fill="#315c49">{v.decline}</text><text x="0" y="275" font-family="Arial,sans-serif" font-size="34" font-weight="700" fill="#142c23">27%</text>
       </g>
     </g>
   </svg>
@@ -52,11 +70,11 @@ const descId = `desc-${slug}-${variant}`;
     <desc id={descId}>A recurring revenue curve, MRR movements and a cohort retention matrix produced from tested dbt models.</desc>
     <rect width="920" height="580" rx="26" fill="#e3e9ff" />
     <g transform="translate(68 58)">
-      <text font-family="Arial,sans-serif" font-size="13" font-weight="700" letter-spacing="2" fill="#44548f">SUBSCRIPTION ANALYTICS</text>
-      <text y="44" font-family="Arial,sans-serif" font-size="32" font-weight="700" fill="#18254f">Revenue that reconciles.</text>
+      <text font-family="Arial,sans-serif" font-size="13" font-weight="700" letter-spacing="2" fill="#44548f">{v.subscriptionLabel}</text>
+      <text y="44" font-family="Arial,sans-serif" font-size="32" font-weight="700" fill="#18254f">{v.subscriptionTitle}</text>
       <g transform="translate(0 94)">
         <rect width="500" height="342" rx="18" fill="#f8f9ff" />
-        <text x="24" y="34" font-family="Arial,sans-serif" font-size="12" font-weight="700" fill="#5b6692">ENDING MRR</text>
+        <text x="24" y="34" font-family="Arial,sans-serif" font-size="12" font-weight="700" fill="#5b6692">{v.endingMrr}</text>
         <text x="24" y="78" font-family="Arial,sans-serif" font-size="34" font-weight="700" fill="#18254f">US$140</text>
         <text x="376" y="65" font-family="Arial,sans-serif" font-size="13" fill="#23765d">+100%</text>
         <g transform="translate(24 108)">
@@ -69,11 +87,11 @@ const descId = `desc-${slug}-${variant}`;
       </g>
       <g transform="translate(530 94)">
         <rect width="255" height="164" rx="18" fill="#18254f" />
-        <text x="22" y="31" font-family="Arial,sans-serif" font-size="11" font-weight="700" fill="#aebdfd">MRR MOVEMENTS</text>
+        <text x="22" y="31" font-family="Arial,sans-serif" font-size="11" font-weight="700" fill="#aebdfd">{v.movements}</text>
         <g transform="translate(24 55)"><rect width="32" height="70" rx="5" fill="#43b98b"/><rect x="42" y="35" width="32" height="35" rx="5" fill="#8091ef"/><rect x="84" y="56" width="32" height="14" rx="5" fill="#a979ef"/><rect x="126" y="70" width="32" height="31" rx="5" fill="#efaa35"/><rect x="168" y="70" width="32" height="47" rx="5" fill="#ef6666"/></g>
-        <text x="22" y="147" font-family="Arial,sans-serif" font-size="11" fill="#aebdfd">new · expansion · churn</text>
+        <text x="22" y="147" font-family="Arial,sans-serif" font-size="11" fill="#aebdfd">{v.movementList}</text>
         <rect y="184" width="255" height="158" rx="18" fill="#f8f9ff" />
-        <text x="22" y="216" font-family="Arial,sans-serif" font-size="11" font-weight="700" fill="#5b6692">COHORT RETENTION</text>
+        <text x="22" y="216" font-family="Arial,sans-serif" font-size="11" font-weight="700" fill="#5b6692">{v.retention}</text>
         <g transform="translate(22 236)">
           <g fill="#526de8"><rect width="42" height="22" rx="3"/><rect x="48" width="42" height="22" rx="3" opacity=".78"/><rect x="96" width="42" height="22" rx="3" opacity=".55"/><rect x="144" width="42" height="22" rx="3" opacity=".38"/></g>
           <g transform="translate(0 28)" fill="#526de8"><rect width="42" height="22" rx="3"/><rect x="48" width="42" height="22" rx="3" opacity=".7"/><rect x="96" width="42" height="22" rx="3" opacity=".49"/></g>
@@ -89,8 +107,8 @@ const descId = `desc-${slug}-${variant}`;
     <desc id={descId}>Marketplace events flow through replay-safe Bronze, quality-controlled Silver and decision-ready Gold layers.</desc>
     <rect width="920" height="580" rx="26" fill="#f5e9ad" />
     <g transform="translate(66 58)">
-      <text font-family="Arial,sans-serif" font-size="13" font-weight="700" letter-spacing="2" fill="#6d632f">MARKETPLACE EVENT LAKEHOUSE</text>
-      <text y="44" font-family="Arial,sans-serif" font-size="32" font-weight="700" fill="#29281d">Events become evidence.</text>
+      <text font-family="Arial,sans-serif" font-size="13" font-weight="700" letter-spacing="2" fill="#6d632f">{v.lakehouseLabel}</text>
+      <text y="44" font-family="Arial,sans-serif" font-size="32" font-weight="700" fill="#29281d">{v.lakehouseTitle}</text>
       <g transform="translate(0 105)">
         <g fill="#d0bd5f" opacity=".75"><circle cx="15" cy="42" r="8"/><circle cx="48" cy="18" r="6"/><circle cx="80" cy="65" r="10"/><circle cx="112" cy="34" r="7"/><circle cx="148" cy="77" r="6"/><circle cx="175" cy="24" r="9"/></g>
         <path d="M12 132C100 132 129 132 205 132" stroke="#817431" stroke-width="3" stroke-dasharray="7 7"/>
@@ -98,33 +116,33 @@ const descId = `desc-${slug}-${variant}`;
           <rect width="168" height="210" rx="20" fill="#fff9da" stroke="#b4a450"/>
           <text x="22" y="39" font-family="Arial,sans-serif" font-size="12" font-weight="700" fill="#817431">01 · BRONZE</text>
           <text x="22" y="82" font-family="Arial,sans-serif" font-size="24" font-weight="700" fill="#29281d">1,020</text>
-          <text x="22" y="106" font-family="Arial,sans-serif" font-size="13" fill="#6d632f">immutable events</text>
+          <text x="22" y="106" font-family="Arial,sans-serif" font-size="13" fill="#6d632f">{v.bronzeEvents}</text>
           <path d="M22 132h124" stroke="#d8ca83"/>
-          <text x="22" y="164" font-family="Arial,sans-serif" font-size="13" fill="#6d632f">event time</text><text x="22" y="188" font-family="Arial,sans-serif" font-size="13" fill="#6d632f">ingestion time</text>
+          <text x="22" y="164" font-family="Arial,sans-serif" font-size="13" fill="#6d632f">{v.eventTime}</text><text x="22" y="188" font-family="Arial,sans-serif" font-size="13" fill="#6d632f">{v.ingestionTime}</text>
         </g>
         <path d="M373 141h62" stroke="#817431" stroke-width="3"/>
         <g transform="translate(435 18)">
           <rect width="168" height="246" rx="20" fill="#1f6d62"/>
           <text x="22" y="39" font-family="Arial,sans-serif" font-size="12" font-weight="700" fill="#b8e1d9">02 · SILVER</text>
           <text x="22" y="82" font-family="Arial,sans-serif" font-size="24" font-weight="700" fill="#fff">982</text>
-          <text x="22" y="106" font-family="Arial,sans-serif" font-size="13" fill="#b8e1d9">validated events</text>
+          <text x="22" y="106" font-family="Arial,sans-serif" font-size="13" fill="#b8e1d9">{v.silverEvents}</text>
           <path d="M22 132h124" stroke="#5f9e94"/>
-          <text x="22" y="164" font-family="Arial,sans-serif" font-size="13" fill="#e3f3ef">10 duplicates</text><text x="22" y="188" font-family="Arial,sans-serif" font-size="13" fill="#e3f3ef">18 quarantined</text><text x="22" y="212" font-family="Arial,sans-serif" font-size="13" fill="#e3f3ef">41 late arrivals</text>
+          <text x="22" y="164" font-family="Arial,sans-serif" font-size="13" fill="#e3f3ef">10 {v.duplicates}</text><text x="22" y="188" font-family="Arial,sans-serif" font-size="13" fill="#e3f3ef">18 {v.quarantined}</text><text x="22" y="212" font-family="Arial,sans-serif" font-size="13" fill="#e3f3ef">41 {v.late}</text>
         </g>
         <path d="M603 141h62" stroke="#817431" stroke-width="3"/>
         <g transform="translate(665 52)">
           <rect width="122" height="178" rx="20" fill="#29281d"/>
           <text x="20" y="37" font-family="Arial,sans-serif" font-size="12" font-weight="700" fill="#f5e9ad">03 · GOLD</text>
           <text x="20" y="81" font-family="Arial,sans-serif" font-size="24" font-weight="700" fill="#fff">301</text>
-          <text x="20" y="104" font-family="Arial,sans-serif" font-size="12" fill="#ded7aa">sessions</text>
+          <text x="20" y="104" font-family="Arial,sans-serif" font-size="12" fill="#ded7aa">{v.sessions}</text>
           <text x="20" y="137" font-family="Arial,sans-serif" font-size="24" font-weight="700" fill="#fff">101</text>
-          <text x="20" y="158" font-family="Arial,sans-serif" font-size="12" fill="#ded7aa">orders</text>
+          <text x="20" y="158" font-family="Arial,sans-serif" font-size="12" fill="#ded7aa">{v.orders}</text>
         </g>
       </g>
       <g transform="translate(0 414)">
         <rect width="787" height="62" rx="16" fill="#fff9da"/>
-        <text x="20" y="25" font-family="Arial,sans-serif" font-size="11" font-weight="700" fill="#817431">QUALITY CONTRACT</text>
-        <text x="20" y="47" font-family="Arial,sans-serif" font-size="15" fill="#29281d">deduplication · quarantine · sequence-aware funnel · revenue reconciliation</text>
+        <text x="20" y="25" font-family="Arial,sans-serif" font-size="11" font-weight="700" fill="#817431">{v.quality}</text>
+        <text x="20" y="47" font-family="Arial,sans-serif" font-size="15" fill="#29281d">{v.qualityList}</text>
       </g>
     </g>
   </svg>

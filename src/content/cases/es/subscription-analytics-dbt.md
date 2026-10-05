@@ -2,19 +2,19 @@
 locale: es
 slug: subscription-analytics-dbt
 order: 2
-title: Subscription Analytics with dbt
+title: Analítica de Suscripciones con dbt
 eyebrow: Analytics Engineering
-description: Un producto analítico con dbt y DuckDB que entrega MRR, NRR, churn y cohortes reconciliados mediante marts probados y un dashboard interactivo.
-role: Contratos de métricas · modelos dbt · dashboard
+description: Un producto analítico con dbt y DuckDB que entrega MRR, NRR, cancelación y cohortes reconciliados mediante modelos finales probados y un panel interactivo.
+role: Contratos de métricas · modelos dbt · panel
 year: 2026
 dataKind: synthetic
-dataLabel: Fixtures sintéticas versionadas
+dataLabel: Datos sintéticos versionados
 question: ¿Finanzas y Producto pueden confiar en MRR, NRR, churn y retención cuando los datos cambian y llegan tarde?
 repoUrl: https://github.com/J0BS013/subscription-analytics-dbt
 demoUrl: https://subscription-analytics-dbt.streamlit.app/
 image: /images/projects/subscription-analytics-dbt.png
 socialImage: /social/subscription-analytics-dbt.png
-imageAlt: Dashboard de suscripciones con MRR final, NRR, ingresos pagados y puente mensual de movimientos.
+imageAlt: Panel de suscripciones con MRR final, NRR, ingresos pagados y puente mensual de movimientos.
 sourceCommit: 40f74e571639a4aee525c5bbaf928ba9d7271d3a
 evidence:
   - label: Validación del build
@@ -24,67 +24,67 @@ evidence:
   - label: Historia
     value: Snapshot SCD Type 2
 scope:
-  - Fixtures sintéticas versionadas ejecutadas localmente en DuckDB.
+  - Datos sintéticos versionados ejecutados localmente en DuckDB.
 ---
 
 ## Qué es este proyecto
 
-Subscription Analytics with dbt es un producto analítico autocontenido para ingresos recurrentes. Convierte datos versionados de suscripciones, facturas, clientes y eventos en marts probados de MRR, NRR, churn, ingresos pagados y retención de cohortes, consumidos por la documentación dbt y un dashboard interactivo.
+Analítica de Suscripciones con dbt es un producto autocontenido para analizar ingresos recurrentes. Convierte datos versionados de suscripciones, facturas, clientes y eventos en modelos finales probados de MRR, NRR, cancelación, ingresos pagados y retención de cohortes. Estos modelos alimentan tanto la documentación de dbt como un panel interactivo.
 
 Finanzas y Producto necesitan la misma respuesta a preguntas aparentemente simples: cuánto ingreso recurrente terminó el mes, qué cambió el saldo y cuántos clientes siguieron activos. Si MRR, NRR y retención de cohorte usan poblaciones inconsistentes, cada decisión posterior se convierte en una discusión de definiciones.
 
-Construí el proyecto como un producto analítico compacto y no como una colección de SQL. Convierte fixtures de suscripciones, facturas, clientes y eventos en marts reconciliados, métricas documentadas, pruebas y un dashboard que lee solamente esas capas confiables.
+Construí el proyecto como un producto analítico compacto y no como una colección de consultas SQL. Convierte datos versionados de suscripciones, facturas, clientes y eventos en modelos reconciliados, métricas documentadas, pruebas y un panel que lee únicamente esas capas confiables.
 
 ## Por qué fallan las métricas de suscripción
 
-Las métricas de suscripción mezclan saldos, movimientos y poblaciones. El MRR final es un saldo y no debe sumarse entre meses. New, expansion, contraction, churn y reactivation son movimientos y deben reconciliar apertura con cierre. NRR puede superar 100% si la expansión compensa pérdidas, aunque la retención de clientes caiga.
+Las métricas de suscripción mezclan saldos, movimientos y poblaciones. El MRR final es un saldo y no debe sumarse entre meses. Las altas, expansiones, contracciones, cancelaciones y reactivaciones son movimientos y deben conciliar el saldo inicial con el final. El NRR puede superar el 100 % si la expansión compensa las pérdidas, aunque disminuya la retención de clientes.
 
 Los eventos tardíos crean otro riesgo. Reprocesar todo es costoso, pero aceptar solo timestamps posteriores al máximo previo pierde eventos demorados. Los atributos de clientes también cambian y conservar solo el registro actual reescribe el pasado.
 
 ## Qué construí
 
-Definí contratos de métricas, organicé source, staging, intermediate y marts, implementé movimientos y snapshots y agregué pruebas para invariantes de negocio. También construí un dashboard Streamlit que consume los marts en lugar de duplicar reglas en la visualización.
+Definí contratos de métricas; organicé las capas de fuentes, preparación, transformación intermedia y modelos finales; implementé movimientos e historiales; y agregué pruebas para reglas de negocio. También construí un panel en Streamlit que consume los modelos finales en lugar de duplicar reglas en la visualización.
 
-El repositorio se ejecuta con dbt y DuckDB sin credenciales de cloud. Las fixtures versionadas permiten revisar errores en CI y repetir un build limpio.
+El repositorio se ejecuta con dbt y DuckDB sin credenciales de servicios en la nube. Los datos sintéticos versionados permiten investigar errores en la integración continua y repetir una compilación limpia.
 
 ## Requisitos de diseño
 
-El resultado debe ser igual localmente y en GitHub Actions. Aunque pequeños y sintéticos, los datos deben demostrar staging tipado, claves estables, granos explícitos, lookback incremental, slowly changing dimensions y reconciliación.
+El resultado debe ser el mismo localmente y en GitHub Actions. Aunque pequeños y sintéticos, los datos deben demostrar preparación con tipos definidos, claves estables, nivel de detalle explícito, revisión incremental de eventos recientes, dimensiones con historial y conciliación.
 
-El dashboard prueba consumo, no sustituye la documentación de dbt. DuckDB demuestra comportamiento, no costos, concurrencia o performance de un warehouse real.
+El panel demuestra el consumo de los datos, pero no sustituye la documentación de dbt. DuckDB demuestra el comportamiento de los modelos, no los costos, la concurrencia ni el rendimiento de un almacén de datos real.
 
 ## Cómo funciona el producto de datos
 
-Staging renombra y tipa campos preservando el significado original. Intermediate construye períodos, actividad y movimientos mensuales. Los marts exponen hechos de suscripción, eventos, el puente de MRR, cohortes, churn y revenue retention.
+La capa de preparación renombra y tipa campos sin alterar su significado. La capa intermedia construye periodos, actividad y movimientos mensuales. Los modelos finales exponen suscripciones, eventos, el puente de MRR, cohortes, cancelación y retención de ingresos.
 
-El modelo de eventos es incremental con lookback. Un snapshot mantiene historia de clientes como SCD Type 2. Las pruebas cubren unicidad, nulos, valores aceptados, relaciones y reglas como la reconciliación de movimientos.
+El modelo de eventos es incremental y vuelve a revisar una ventana reciente para captar llegadas tardías. Un historial conserva los cambios de clientes como una dimensión de tipo 2. Las pruebas cubren unicidad, valores nulos, valores aceptados, relaciones y reglas como la conciliación de movimientos.
 
-La aplicación lee los marts de DuckDB y diferencia saldo, movimiento y tasa. No existe una segunda implementación de MRR en Python.
+La aplicación lee los modelos finales de DuckDB y diferencia saldo, movimiento y tasa. No existe una segunda implementación de MRR en Python.
 
 ## Decisiones de métricas
 
-Modelé movimientos explícitamente en lugar de inferirlos en el gráfico, de modo que cada customer-month tenga una clasificación auditable. Fijé el denominador de cada cohorte al ingreso; no disminuye cuando salen clientes. Para late-arriving events elegí un lookback acotado: full refresh es simple pero costoso; un corte estricto es eficiente pero incorrecto.
+Modelé los movimientos explícitamente en lugar de inferirlos en el gráfico, de modo que cada combinación de cliente y mes tenga una clasificación auditable. Fijé el denominador de cada cohorte en el momento de entrada; no disminuye cuando salen clientes. Para los eventos tardíos elegí volver a revisar una ventana limitada: recalcular todo es simple pero costoso, mientras que un corte estricto es eficiente pero pierde información.
 
 ## Resultados y validación
 
-El build limpio termina con 76 nodos dbt aprobados, incluyendo modelos, seeds, snapshots y tests. El puente reconcilia movimientos con la variación del saldo. El snapshot preserva historia y la documentación expone lineage, columnas y pruebas.
+La compilación limpia termina con 76 nodos de dbt aprobados, incluidos modelos, datos iniciales, historiales y pruebas. El puente concilia los movimientos con la variación del saldo. El historial conserva los cambios y la documentación muestra dependencias, columnas y pruebas.
 
-El dashboard muestra MRR final, NRR, ingresos, retención y movimientos. Los valores proceden de fixtures sintéticas identificadas y demuestran que los marts pueden servir una interfaz sin mover la lógica de negocio.
+El panel muestra MRR final, NRR, ingresos, retención y movimientos. Los valores proceden de datos sintéticos identificados y demuestran que los modelos finales pueden alimentar una interfaz sin trasladar la lógica de negocio.
 
 ## El error del denominador
 
 Una versión anterior contaba solo los clientes visibles en cada mes. El denominador caía junto con el numerador y hacía que la retención tardía pareciera mejor. La consulta era válida y el gráfico plausible, por lo que el riesgo era mayor.
 
-Corregí el modelo materializando el tamaño original de la cohorte y conectando cada período a ese denominador fijo. Una prueba semántica protege el comportamiento. El episodio muestra por qué un dashboard pulido puede estar equivocado cuando el contrato poblacional es implícito.
+Corregí el modelo materializando el tamaño original de la cohorte y conectando cada periodo a ese denominador fijo. Una prueba semántica protege el comportamiento. El episodio muestra por qué un panel bien presentado puede estar equivocado cuando la población no está definida de forma explícita.
 
 ## Cómo interpretar las métricas
 
-Los datos son sintéticos y cubren pocos meses. El cambio usa fixtures; impuestos, refunds, créditos y cambios contractuales están simplificados. El motor local no prueba permisos, costos u orquestación. NRR superior a 100% no representa crecimiento real.
+Los datos son sintéticos y cubren pocos meses. El cambio de divisas usa valores definidos para la demostración; los impuestos, reembolsos, créditos y cambios contractuales están simplificados. El motor local no prueba permisos, costos ni orquestación. Un NRR superior al 100 % no representa crecimiento real.
 
 ## Frontera de producción
 
-La adopción en producción exige mapear los contratos al modelo de eventos de billing, alinear cutoffs con Finanzas, agregar freshness y umbrales de anomalía y validar backfills contra cierres aprobados. Las estrategias incrementales del warehouse y el control de acceso siguen a esa reconciliación.
+La adopción en producción exige conectar los contratos al modelo de eventos de facturación, acordar fechas de corte con Finanzas, agregar controles de actualización y umbrales de anomalía, y validar las reconstrucciones históricas contra cierres aprobados. Las estrategias incrementales del almacén de datos y el control de acceso vienen después de esa conciliación.
 
 ## Explora el proyecto
 
-El repositorio incluye SQL, pruebas, fixtures, documentación y CI. La demo es una capa de presentación sobre marts probados.
+El repositorio incluye SQL, pruebas, datos sintéticos, documentación e integración continua. La demostración es una capa de presentación sobre modelos finales probados.

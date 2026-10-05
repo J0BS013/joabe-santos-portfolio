@@ -2,9 +2,9 @@
 locale: pt-br
 slug: marketplace-event-lakehouse
 order: 3
-title: Marketplace Event Lakehouse
+title: Lakehouse de Eventos do Marketplace
 eyebrow: Data Engineering
-description: Um lakehouse replay-safe que transforma eventos duplicados, atrasados e fora de ordem em funil e receita reconciliados.
+description: Um lakehouse que pode reprocessar eventos com segurança e transforma duplicatas, atrasos e registros fora de ordem em métricas reconciliadas de funil e receita.
 role: Pipeline de eventos · qualidade · modelos Gold
 year: 2026
 dataKind: generated
@@ -18,15 +18,15 @@ evidence:
     value: MERGE replay-safe
   - label: Qualidade
     value: Quarentena + reconciliação
-  - label: Performance
-    value: Benchmark versionado de 100 mil
+  - label: Desempenho
+    value: Teste versionado com 100 mil eventos
 scope:
-  - Carga local determinística com benchmark versionado de 100 mil eventos.
+  - Carga local reproduzível com teste de desempenho versionado de 100 mil eventos.
 ---
 
 ## O que é este projeto
 
-Marketplace Event Lakehouse é um pipeline em Docker com PySpark, Delta Lake e Prefect para eventos comportamentais de marketplace. Ele ingere lotes ruidosos, preserva a evidência bruta, coloca registros inválidos em quarentena e produz modelos replay-safe de pedidos, receita e funil sensível à sequência.
+O Lakehouse de Eventos do Marketplace é um pipeline em Docker com PySpark, Delta Lake e Prefect para eventos de comportamento. Ele recebe lotes com problemas, preserva os dados brutos, coloca registros inválidos em quarentena e produz modelos de pedidos, receita e funil que podem ser reprocessados sem duplicação.
 
 Um marketplace precisa saber onde compradores abandonam a jornada, quanto GMV foi criado e quanta receita pode ser reconhecida. Essas decisões só são defensáveis quando o pipeline lida com duplicatas, atrasos e sequências impossíveis sem alterar silenciosamente resultados anteriores.
 
@@ -34,33 +34,33 @@ Construí o lakehouse para tornar confiabilidade visível. O objetivo não é ex
 
 ## Por que eventos são difíceis
 
-Eventos têm dois relógios. Event time indica quando a pessoa agiu; ingestion time, quando a plataforma recebeu o registro. Um checkout atrasado pode chegar num lote posterior e um retry pode duplicar o mesmo evento. Atributos de seller e produto também mudam depois da compra e precisam ser reconstruídos historicamente.
+Eventos têm dois horários importantes: quando a pessoa agiu e quando a plataforma recebeu o registro. Uma finalização de compra atrasada pode chegar em outro lote, e uma nova tentativa de envio pode duplicar o mesmo evento. Atributos de vendedores e produtos também mudam depois da compra e precisam ser reconstruídos historicamente.
 
 Contagens ingênuas transformam problemas técnicos em comportamento aparente. Duplicatas inflam GMV, dimensões atuais reescrevem o passado e contagens independentes podem mostrar mais checkouts que carts.
 
 ## O que construí
 
-Desenhei o gerador determinístico, transformações PySpark, tabelas Delta, orquestração Prefect e modelos Gold. Especifiquei regras de qualidade, quarentena, metadados de execução, alertas de SLA e um benchmark versionado. Também escrevi testes e runbook de recuperação.
+Desenhei o gerador determinístico, as transformações em PySpark, as tabelas Delta, a orquestração com Prefect e os modelos Gold. Especifiquei regras de qualidade, quarentena, metadados de execução, alertas de nível de serviço e um teste de desempenho versionado. Também escrevi os testes e o guia de recuperação.
 
-A pergunta central de engenharia foi como tornar retry seguro, porque retries são comportamento operacional normal, não uma exceção rara.
+A pergunta central de engenharia foi como tornar o reprocessamento seguro, porque novas tentativas fazem parte da operação normal e não são uma exceção rara.
 
 ## Requisitos de projeto
 
-O projeto roda em Docker local e precisa equilibrar arquitetura realista com execução acessível. Os eventos são gerados, não capturados de um marketplace. O benchmark descreve o ambiente documentado e não um cluster Spark gerenciado.
+O projeto roda em Docker local e equilibra uma arquitetura realista com uma execução acessível. Os eventos são gerados, não capturados de um marketplace. O teste de desempenho descreve o ambiente documentado, não um cluster Spark gerenciado.
 
-O pipeline deve preservar evidência bruta, isolar inválidos, permitir backfill e evitar efeitos colaterais em reruns. Gold precisa reconciliar com eventos aceitos em Silver, não com o Bronze ruidoso.
+O pipeline deve preservar os dados brutos, isolar registros inválidos, permitir recomposição histórica e evitar efeitos colaterais em novas execuções. A camada Gold precisa reconciliar com eventos aceitos em Silver, não com o Bronze ainda não tratado.
 
 ## Como o lakehouse funciona
 
-Bronze armazena eventos imutáveis com payload, event time, ingestion time e run metadata. Silver valida schemas, normaliza, deduplica IDs, aplica watermark e envia linhas inválidas ou excessivamente atrasadas para quarentena. `MERGE` no Delta torna a escrita idempotente.
+Bronze armazena eventos imutáveis com conteúdo, horário do evento, horário de ingestão e metadados da execução. Silver valida esquemas, normaliza campos, remove IDs duplicados, aplica a política de atraso e envia linhas inválidas ou excessivamente tardias para quarentena. O `MERGE` do Delta torna a escrita idempotente.
 
-Dimensões de seller e produto usam SCD Type 2 para resolver a versão válida no event time. Sessionization organiza jornadas. Gold produz pedidos, receita diária e funil cumulativo em que cada etapa depende da anterior na sequência válida.
+As dimensões de vendedor e produto usam SCD Tipo 2 para recuperar a versão válida no momento do evento. A divisão em sessões organiza as jornadas. Gold produz pedidos, receita diária e um funil cumulativo em que cada etapa depende da anterior na sequência correta.
 
-Prefect coordena etapas e registra leituras, escritas, duplicatas, atrasos, rejeições, freshness e alertas. O runbook cobre retry, backfill e falhas comuns.
+O Prefect coordena as etapas e registra leituras, escritas, duplicatas, atrasos, rejeições, atualização dos dados e alertas. O guia operacional cobre novas tentativas, recomposição histórica e falhas comuns.
 
 ## Decisões de design
 
-Mantive os dois relógios: event time representa a verdade comportamental; ingestion time permite diagnóstico operacional. Watermark é uma política com quarentena explícita, não um filtro silencioso.
+Mantive os dois horários: o momento do evento representa o comportamento do usuário; o momento da ingestão permite o diagnóstico operacional. A tolerância a atrasos é uma política com quarentena explícita, não um filtro silencioso.
 
 Escolhi Bronze imutável e merges idempotentes em Silver. Sobrescrever o raw simplificaria o curto prazo, mas removeria a evidência necessária para explicar rejeições. Para o funil, rejeitei contagens diárias independentes e passei a avaliar milestones ordenados dentro da sessão.
 
@@ -76,14 +76,14 @@ Uma primeira versão agrupava eventos por dia e contava cada tipo separadamente.
 
 Substituí as contagens por milestones cumulativos e sensíveis à sequência. Uma sessão precisa conter o pré-requisito antes da próxima etapa. Um teste de regressão protege essa ordem. A correção mudou a lógica e a definição comunicada aos consumidores.
 
-## Como interpretar o benchmark
+## Como interpretar o teste de desempenho
 
 O gerador não reproduz toda falha de produção. O benchmark local não comprova autoscaling, throughput de cloud ou concorrência. Identity stitching é simplificado, e a janela de sessão é uma regra de negócio escolhida. Não há streaming, schema registry corporativo ou plataforma completa de observabilidade.
 
 ## Fronteira de produção
 
-Num ambiente real, eu validaria o contrato com os produtores, publicaria regras de compatibilidade e faria replay de uma partição histórica representativa junto ao warehouse atual. Também definiria budgets de custo e latência, monitoraria a composição da quarentena e atribuiria ownership a cada SLA.
+Em produção, o contrato deve ser validado com os produtores, as regras de compatibilidade precisam ser publicadas e uma partição histórica representativa deve ser reprocessada junto ao data warehouse atual. O modelo operacional também precisa definir limites de custo e latência, monitorar a quarentena e atribuir um responsável a cada SLA.
 
 ## Explore o projeto
 
-O repositório contém ambiente Docker, carga gerada, orquestração, testes, benchmark e runbook. O diagrama corresponde às camadas implementadas no commit indicado.
+O repositório contém o ambiente Docker, a carga gerada, a orquestração, os testes, a medição de desempenho e o guia operacional. O diagrama corresponde às camadas implementadas na versão indicada.

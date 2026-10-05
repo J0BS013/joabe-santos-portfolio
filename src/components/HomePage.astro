@@ -61,7 +61,7 @@ const sectionEyebrows = locale === 'en'
         </header>
         <div class="project-showcase-grid">
           <figure class="project-visual">
-            <ProjectVisual slug={project.slug} alt={`${project.title} — ${project.evidence.join(', ')}`} eager={index === 0} />
+            <ProjectVisual slug={project.slug} alt={`${project.title} — ${project.evidence.join(', ')}`} locale={locale} eager={index === 0} />
           </figure>
           <div class="project-copy">
             <h3><a href={localizedPath(locale, `/work/${project.slug}`)}>{project.title}</a></h3>
@@ -95,7 +95,7 @@ const sectionEyebrows = locale === 'en'
         {otherProjects[locale].map((project, index) => (
           <a class="other-card" href={localizedPath(locale, `/work/${project.slug}`)}>
             <span class="project-number">0{index + 4}</span>
-            <figure class="other-visual"><ProjectVisual slug={project.slug} alt={project.title} variant="product" /></figure>
+            <figure class="other-visual"><ProjectVisual slug={project.slug} alt={project.title} locale={locale} variant="product" /></figure>
             <h3>{project.title}</h3>
             <p>{project.body}</p>
             <span class="other-evidence">{project.evidence}</span>

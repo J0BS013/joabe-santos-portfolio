@@ -2,13 +2,13 @@
 locale: es
 slug: starbucks-promo-effectiveness-analysis
 order: 4
-title: Starbucks Promo Effectiveness
+title: Efectividad de las Promociones de Starbucks
 eyebrow: Decision Analytics
 description: Un análisis observacional de promociones que atribuye ofertas repetidas a nivel de exposición, cuantifica señales económicas y define el experimento necesario para una decisión causal.
 role: Atribución · economía · diseño experimental
 year: 2026
 dataKind: public
-dataLabel: Dataset simulado de comportamiento Starbucks
+dataLabel: Datos simulados de comportamiento de Starbucks
 question: ¿Qué oferta merece la próxima prueba controlada y qué puede demostrar realmente el comportamiento histórico?
 repoUrl: https://github.com/J0BS013/starbucks-promo-effectiveness-analysis
 image: /images/projects/starbucks-promo-effectiveness-analysis.png
@@ -30,15 +30,15 @@ scope:
 
 ## Qué es este proyecto
 
-Starbucks Promo Effectiveness es un análisis integral de exposiciones promocionales repetidas. Reconstruye a qué oferta pertenece cada vista, transacción y finalización, compara campañas de descuento, BOGO e informativas y convierte los hallazgos observacionales en una recomendación de prueba controlada.
+Efectividad de las Promociones de Starbucks es un análisis integral de exposiciones promocionales repetidas. Reconstruye a qué oferta pertenece cada vista, transacción y finalización, compara campañas de descuento, BOGO e informativas y convierte los hallazgos observacionales en una recomendación de prueba controlada.
 
 La pregunta útil no es solo qué oferta tiene la mayor tasa de finalización. Es qué promoción debe avanzar a una prueba controlada, con qué límites económicos y cuánta confianza permite el historial de eventos.
 
-La recomendación es priorizar descuentos en la próxima prueba, mantener BOGO como challenger con guardrails económicos más estrictos y no tratar los mensajes informativos como promociones generadoras de conversión. Es una decisión de priorización de prueba, no de rollout.
+La recomendación es priorizar los descuentos en la próxima prueba, mantener BOGO como alternativa con límites económicos más estrictos y no tratar los mensajes informativos como promociones que generan conversión. Es una decisión sobre qué probar primero, no una recomendación para lanzar la campaña a toda la base.
 
 ## El problema de atribución
 
-Un cliente puede recibir la misma oferta varias veces. Vistas, transacciones y finalizaciones pueden superponerse entre ventanas activas. Un join a nivel de cliente multiplicaría resultados y haría que una oferta frecuente pareciera mejor solo por enviarse más veces.
+Un cliente puede recibir la misma oferta varias veces. Las vistas, transacciones y finalizaciones pueden superponerse entre ventanas activas. Una unión de datos a nivel de cliente multiplicaría resultados y haría que una oferta frecuente pareciera mejor solo por enviarse más veces.
 
 Modelé una fila por oferta recibida, creé un identificador único de exposición y asigné cada evento posterior a la exposición elegible más reciente dentro de su vigencia. Cada evento solo puede atribuirse una vez. Si falta la duración, el pipeline falla en lugar de crear silenciosamente una ventana ilimitada.
 
@@ -52,9 +52,9 @@ Estas cifras describen comportamiento observado y economía de escenario. No est
 
 ## Diseño del experimento
 
-El decision memo convierte el análisis en un plan de prueba. Los clientes elegibles deben asignarse aleatoriamente antes de la exposición, con intención de tratar como análisis principal. La métrica primaria es margen de contribución incremental por cliente elegible; finalización, conversión, ticket y aceptación son secundarias.
+El memorando de decisión convierte el análisis en un plan de prueba. Los clientes elegibles deben asignarse aleatoriamente antes de la exposición, con intención de tratar como análisis principal. La métrica principal es el margen de contribución incremental por cliente elegible; la finalización, la conversión, el valor del pedido y la aceptación son métricas secundarias.
 
-Costo de recompensa, frecuencia de contacto, bajas y concentración adversa por segmento actúan como guardrails. Escalar exige que el límite inferior del intervalo de confianza del margen incremental permanezca positivo sin violarlos.
+El costo de la recompensa, la frecuencia de contacto, las bajas y la concentración adversa por segmento actúan como límites de seguridad. Escalar exige que el límite inferior del intervalo de confianza del margen incremental permanezca positivo sin vulnerarlos.
 
 ## Lo que descarté
 
@@ -64,8 +64,8 @@ Un módulo sintético separado demuestra asignación balanceada, estimación de 
 
 ## Validación y reproducibilidad
 
-El pipeline es reproducible desde los eventos hasta exposiciones, figuras y decision memo. Veintidós pruebas cubren invariantes de atribución, cálculos económicos y helpers causales. Afirmaciones, supuestos y alcance de la evidencia permanecen junto a los outputs que califican.
+El proceso es reproducible desde los eventos hasta las exposiciones, las figuras y el memorando de decisión. Veintidós pruebas cubren reglas de atribución, cálculos económicos y funciones de apoyo al análisis causal. Las afirmaciones, los supuestos y el alcance de la evidencia permanecen junto a los resultados que los sustentan.
 
 ## Qué significa la recomendación
 
-El análisis sustenta priorizar un experimento pre-registrado de descuento, no declarar un ganador para rollout. Una decisión válida utiliza holdout aleatorio, una definición completa de margen de contribución, controles de balance, intervalos de confianza y monitoreo de guardrails con el tamaño de muestra planificado.
+El análisis sustenta priorizar un experimento de descuentos definido de antemano, no declarar un ganador para desplegarlo a toda la base. Una decisión válida utiliza un grupo de control aleatorio, una definición completa del margen de contribución, controles de equilibrio, intervalos de confianza y monitoreo de límites de seguridad con el tamaño de muestra planificado.

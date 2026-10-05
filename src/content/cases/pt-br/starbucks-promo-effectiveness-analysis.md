@@ -2,13 +2,13 @@
 locale: pt-br
 slug: starbucks-promo-effectiveness-analysis
 order: 4
-title: Starbucks Promo Effectiveness
+title: Efetividade das Promoções Starbucks
 eyebrow: Decision Analytics
-description: Uma análise observacional de promoções que atribui ofertas repetidas no grão da exposição, quantifica sinais econômicos e define o experimento necessário para uma decisão causal.
+description: Uma análise observacional que atribui ofertas repetidas a cada exposição, quantifica sinais econômicos e define o experimento necessário para uma decisão causal.
 role: Atribuição · economia · desenho experimental
 year: 2026
 dataKind: public
-dataLabel: Dataset simulado de comportamento Starbucks
+dataLabel: Dados simulados de comportamento Starbucks
 question: Qual oferta merece o próximo teste controlado e o que o comportamento histórico realmente consegue provar?
 repoUrl: https://github.com/J0BS013/starbucks-promo-effectiveness-analysis
 image: /images/projects/starbucks-promo-effectiveness-analysis.png
@@ -30,11 +30,11 @@ scope:
 
 ## O que é este projeto
 
-Starbucks Promo Effectiveness é uma análise ponta a ponta de exposições promocionais repetidas. Ela reconstrói a qual oferta pertencem cada visualização, transação e conclusão, compara campanhas de desconto, BOGO e informativas e converte os achados observacionais em uma recomendação de teste controlado.
+Efetividade das Promoções Starbucks é uma análise completa de exposições promocionais repetidas. Ela reconstrói a qual oferta pertence cada visualização, transação e conclusão, compara campanhas de desconto, BOGO e informativas e transforma os achados observacionais em uma recomendação de teste controlado.
 
 A pergunta útil não é apenas qual oferta teve a maior taxa de conclusão. É qual promoção deve avançar para um teste controlado, sob quais limites econômicos e quanta confiança o histórico de eventos sustenta.
 
-A recomendação é priorizar descontos no próximo teste, manter BOGO como challenger com guardrails econômicos mais rígidos e não tratar mensagens informativas como promoções geradoras de conversão. É uma decisão de priorização de teste, não de rollout.
+A recomendação é priorizar descontos no próximo teste, manter BOGO como alternativa com limites econômicos mais rígidos e não tratar mensagens informativas como promoções geradoras de conversão. É uma decisão sobre qual experimento realizar, não uma recomendação de implantação imediata.
 
 ## O problema de atribuição
 
@@ -52,9 +52,9 @@ Esses valores descrevem comportamento observado e economia de cenário. Não est
 
 ## Desenho do experimento
 
-O decision memo transforma a análise em plano de teste. Clientes elegíveis devem ser randomizados antes da exposição, com intenção de tratar como análise principal. A métrica primária é margem de contribuição incremental por cliente elegível; conclusão, conversão, ticket e adesão são métricas secundárias.
+O memorando de decisão transforma a análise em um plano de teste. Os clientes elegíveis devem ser distribuídos aleatoriamente antes da exposição, usando intenção de tratar como análise principal. A métrica primária é a margem de contribuição incremental por cliente elegível; conclusão, conversão, valor do pedido e adesão são métricas secundárias.
 
-Custo da recompensa, frequência de contato, descadastro e concentração adversa por segmento são guardrails. Escalar exige que o limite inferior do intervalo de confiança da margem incremental permaneça positivo sem violar esses limites.
+Custo da recompensa, frequência de contato, descadastro e concentração adversa por segmento funcionam como limites de segurança. Ampliar a campanha exige que o limite inferior do intervalo de confiança da margem incremental permaneça positivo sem violar esses critérios.
 
 ## O que descartei
 
@@ -64,8 +64,8 @@ Um módulo sintético separado demonstra randomização balanceada, estimação 
 
 ## Validação e reprodutibilidade
 
-O pipeline é reproduzível dos eventos até as exposições, figuras e decision memo. Vinte e dois testes cobrem invariantes de atribuição, cálculos econômicos e helpers causais. Alegações, premissas e alcance da evidência permanecem próximos aos outputs que qualificam.
+O pipeline é reproduzível desde os eventos até as exposições, figuras e o memorando de decisão. Vinte e dois testes cobrem regras de atribuição, cálculos econômicos e funções de análise causal. Alegações, premissas e alcance da evidência permanecem próximos aos resultados que qualificam.
 
 ## O que a recomendação significa
 
-A análise sustenta priorizar um experimento pré-registrado de desconto, não declarar um vencedor para rollout. Uma decisão válida usa holdout randomizado, definição completa de margem de contribuição, checagens de balanceamento, intervalos de confiança e monitoramento de guardrails no tamanho de amostra planejado.
+A análise sustenta priorizar um experimento pré-registrado de desconto, não declarar um vencedor para implantação. Uma decisão válida usa um grupo de controle aleatório, definição completa da margem de contribuição, checagens de equilíbrio, intervalos de confiança e monitoramento dos limites de segurança no tamanho de amostra planejado.

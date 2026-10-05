@@ -2,19 +2,19 @@
 locale: es
 slug: hevy-workout-etl-pipeline
 order: 6
-title: Hevy Workout ETL
+title: ETL de Entrenamientos de Hevy
 eyebrow: Data Product
-description: Un producto resiliente desde la API hasta el dashboard que protege el historial de entrenamientos, promueve outputs Medallion confiables y muestra progresión en una aplicación interactiva.
-role: Ingesta de API · modelos Medallion · dashboard
+description: Un producto de datos resistente a fallos que protege el historial de entrenamientos, genera capas Medallion confiables y muestra la progresión en una aplicación interactiva.
+role: Ingesta de API · modelos Medallion · panel
 year: 2026
 dataKind: generated
-dataLabel: Snapshot personal de entrenamientos versionado
-question: ¿Cómo mantener un dataset respaldado por API completo, reproducible y útil cuando la extracción falla a mitad?
+dataLabel: Historial personal de entrenamientos versionado
+question: ¿Cómo mantener completos, reproducibles y útiles los datos obtenidos de una API cuando la extracción falla a mitad?
 repoUrl: https://github.com/J0BS013/hevy-workout-etl-pipeline
 demoUrl: https://hevy-workout-dashboard-j0bs013.streamlit.app/
 image: /images/projects/hevy-workout-etl-pipeline.png
 socialImage: /social/hevy-workout-etl-pipeline.png
-imageAlt: Dashboard Hevy Workout Analytics con frecuencia, volumen, progresión y consistencia.
+imageAlt: Panel de Hevy Workout Analytics con frecuencia, volumen, progresión y consistencia.
 sourceCommit: 5618eb64288cc15af1accc0203d7cdd1955783ce
 evidence:
   - label: Entrenamientos versionados
@@ -26,36 +26,36 @@ evidence:
   - label: Pruebas automatizadas
     value: "56"
 scope:
-  - Snapshot personal versionado; la app pública no requiere acceso a la API privada.
+  - Historial personal versionado; la aplicación pública no requiere acceso a la API privada.
 ---
 
 ## Qué es este proyecto
 
-El proyecto convierte el historial de la API Hevy en un producto analítico durable. Es un sistema ETL y también algo concreto para usar: un dashboard Streamlit con cuatro pestañas para frecuencia, volumen, progresión por ejercicio y consistencia estadística.
+El proyecto convierte el historial de la API de Hevy en un producto analítico duradero. Es un sistema ETL y también algo concreto para usar: un panel en Streamlit con cuatro pestañas para frecuencia, volumen, progresión por ejercicio y consistencia estadística.
 
-La app pública lee outputs Gold y Analytics confirmados en Git. Nunca necesita la credencial privada de la API, lo que mantiene seguro el deploy y reproducible la demostración.
+La aplicación pública lee resultados de las capas Gold y Analytics versionados en Git. Nunca necesita la credencial privada de la API, lo que mantiene segura la publicación y hace reproducible la demostración.
 
 ## El problema de confiabilidad
 
-Las APIs paginadas pueden fallar después de varias páginas exitosas. Guardar esa respuesta parcial como nuevo snapshot borraría silenciosamente el historial y produciría gráficos convincentes pero incorrectos. La extracción solo devuelve éxito cuando todas las páginas terminan.
+Las API paginadas pueden fallar después de varias páginas correctas. Guardar esa respuesta parcial como un nuevo historial borraría silenciosamente los datos anteriores y produciría gráficos convincentes pero incorrectos. La extracción solo devuelve éxito cuando todas las páginas terminan.
 
-Cada página obligatoria tiene timeout de 15 segundos. Solo rate limits, errores de servidor y timeouts se reintentan con backoff exponencial; autenticación y errores no recuperables fallan inmediatamente. Los nuevos Parquet se promueven atómicamente, por lo que una escritura fallida preserva el último snapshot confiable.
+Cada página obligatoria tiene un límite de 15 segundos. Solo los límites de solicitudes, los errores de servidor y los tiempos de espera se reintentan con pausas crecientes; los errores de autenticación y otros errores no recuperables fallan de inmediato. Los nuevos archivos Parquet se publican de forma atómica, por lo que una escritura fallida conserva el último historial confiable.
 
 ## Arquitectura de datos
 
-Bronze conserva el historial con la forma de la API. Silver estandariza tipos, valida claves y rechaza registros inválidos. Gold produce hechos de entrenamiento, ejercicio y grupo muscular en granos documentados. Analytics deriva volumen semanal, récords, tendencias y medidas de consistencia.
+Bronze conserva el historial con la estructura de la API. Silver estandariza tipos, valida claves y rechaza registros inválidos. Gold produce datos de entrenamiento, ejercicio y grupo muscular con niveles de detalle documentados. Analytics deriva volumen semanal, récords, tendencias y medidas de consistencia.
 
-El dashboard consume solo Gold y Analytics. Esta frontera separa presentación e ingestión y permite que las pruebas validen las mismas tablas que ve el usuario.
+El panel consume solo Gold y Analytics. Esta frontera separa la presentación de la ingesta y permite que las pruebas validen las mismas tablas que ve el usuario.
 
 ## Resultados y validación
 
-El snapshot publicado contiene 510 entrenamientos desde octubre de 2023 hasta marzo de 2026 y 4,33 millones de kilogramos de volumen registrado. La capa analítica evalúa 99 historiales de ejercicios; 49 muestran una tendencia temporal estadísticamente significativa bajo la regla OLS definida.
+El historial publicado contiene 510 entrenamientos desde octubre de 2023 hasta marzo de 2026 y 4,33 millones de kilogramos de volumen registrado. La capa analítica evalúa 99 historiales de ejercicios; 49 muestran una tendencia temporal estadísticamente significativa bajo la regla de regresión definida.
 
-La interfaz ofrece Overview, Volume, Progression y Analytics. Los filtros cambian la ventana de revisión sin alterar el snapshot original. Cincuenta y seis pruebas automatizadas cubren API, transformaciones, calidad y analytics sin llamar al servicio en vivo.
+La interfaz ofrece las vistas Resumen, Volumen, Progresión y Análisis. Los filtros cambian el periodo de revisión sin alterar el historial original. Cincuenta y seis pruebas automatizadas cubren la API, las transformaciones, la calidad y los cálculos analíticos sin llamar al servicio en vivo.
 
 ## Capa estadística
 
-La progresión se estima por ejercicio con mínimos cuadrados ordinarios a lo largo del tiempo. Cada output incluye pendiente, R², p-valor y flag de significancia en p < 0,05. Tendencia semanal de volumen, récords y coeficiente de variación complementan la lectura sin resumir el progreso en una sola nota.
+La progresión se estima por ejercicio con mínimos cuadrados ordinarios a lo largo del tiempo. Cada resultado incluye pendiente, R², valor p y un indicador de significancia cuando p < 0,05. La tendencia semanal de volumen, los récords y el coeficiente de variación complementan la lectura sin resumir el progreso en una sola nota.
 
 Estas estadísticas describen el historial registrado. No prueban que un programa haya causado un cambio ni que toda pendiente significativa sea relevante en la práctica.
 
@@ -63,8 +63,8 @@ Estas estadísticas describen el historial registrado. No prueban que un program
 
 Descarté una app que consultara la API en cada apertura. Acoplaría la disponibilidad a un tercero, arriesgaría credenciales y haría cambiar el resultado sin una frontera versionada. También descarté CSV como contrato porque pierde tipos importantes entre capas.
 
-El diseño elegido hace explícita la freshness. Un repositorio verde indica código probado y snapshot versionado saludable; no implica ingestión continua de nuevos entrenamientos privados.
+El diseño elegido hace explícita la fecha de actualización. Un repositorio con pruebas aprobadas indica que el código y el historial versionado son válidos; no implica la ingesta continua de nuevos entrenamientos privados.
 
-## Cómo interpretar el dashboard
+## Cómo interpretar el panel
 
-El dashboard describe un historial de entrenamiento versionado; es un producto analítico, no una recomendación de fitness. OLS no atribuye cambios al programa y puede reflejar lesiones o sustituciones. La ingesta privada programada puede actualizar el snapshot mientras el deploy publica solo agregados anónimos, manteniendo datos brutos y credenciales fuera de la app pública.
+El panel describe un historial de entrenamiento versionado; es un producto analítico, no una recomendación de actividad física. La regresión no atribuye los cambios al programa y puede reflejar lesiones o sustituciones de ejercicios. Una ingesta privada programada puede actualizar el historial mientras la aplicación pública muestra solo agregados anónimos, manteniendo los datos originales y las credenciales fuera de la demostración.
